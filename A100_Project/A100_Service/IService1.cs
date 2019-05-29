@@ -1,4 +1,5 @@
-﻿using System;
+﻿using A100_Service.DataBase.ASTI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -20,6 +21,10 @@ namespace A100_Service
         // TODO: Добавьте здесь операции служб
         [OperationContract]
         void SendMessage();
+
+
+        [OperationContract]
+        List<DTO_Lib.City> GetCityes();
     }
 
     // Используйте контракт данных, как показано на следующем примере, чтобы добавить сложные типы к сервисным операциям.

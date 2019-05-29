@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A100_Service", "A100_Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\ConsoleHost.csproj", "{72959B4B-785C-4813-AC41-E0A9E89CF235}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{7D6D5F91-72DF-4B81-A659-4B2B554E4418}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F3C2CC31-DB7A-4843-8B6E-A974554A5932} = {F3C2CC31-DB7A-4843-8B6E-A974554A5932}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO_Lib", "DTO_Lib\DTO_Lib.csproj", "{454804EE-3547-4F20-8268-296A88BF8A77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,14 @@ Global
 		{72959B4B-785C-4813-AC41-E0A9E89CF235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72959B4B-785C-4813-AC41-E0A9E89CF235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72959B4B-785C-4813-AC41-E0A9E89CF235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D6D5F91-72DF-4B81-A659-4B2B554E4418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D6D5F91-72DF-4B81-A659-4B2B554E4418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D6D5F91-72DF-4B81-A659-4B2B554E4418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D6D5F91-72DF-4B81-A659-4B2B554E4418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{454804EE-3547-4F20-8268-296A88BF8A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454804EE-3547-4F20-8268-296A88BF8A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454804EE-3547-4F20-8268-296A88BF8A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454804EE-3547-4F20-8268-296A88BF8A77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
