@@ -27,5 +27,10 @@ namespace A100_Service
             }
             return composite;
         }
+
+        public void SendMessage()
+        {
+            Console.WriteLine("Hello world!");
+        }
     }
 }

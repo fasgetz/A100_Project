@@ -18,6 +18,8 @@ namespace A100_Service
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         // TODO: Добавьте здесь операции служб
+        [OperationContract]
+        void SendMessage();
     }
 
     // Используйте контракт данных, как показано на следующем примере, чтобы добавить сложные типы к сервисным операциям.
