@@ -34,19 +34,20 @@ namespace A100_Service
             Console.WriteLine("Hello world!");
         }
 
-        public List<DTO_Lib.City> GetCityes()
+        public List<ASTI_DTO.City> GetCityes()
         {
             using (ASTI db = new ASTI())
             {
                 var list = db.City.ToList();
 
                 var nes = from b in list
-                                         select new DTO_Lib.City()
+                                         select new ASTI_DTO.City()
                                          {
                                              CityID = b.CityID,
                                              CityName = b.CityName
                                          };
 
+                
                 return nes.ToList();
             }
         }

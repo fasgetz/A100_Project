@@ -24,7 +24,7 @@ namespace A100_Service
 
 
         [OperationContract]
-        List<DTO_Lib.City> GetCityes();
+        List<ASTI_DTO.City> GetCityes();
     }
 
     // Используйте контракт данных, как показано на следующем примере, чтобы добавить сложные типы к сервисным операциям.

@@ -74,6 +74,67 @@ namespace ConsoleClient.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="City", Namespace="http://schemas.datacontract.org/2004/07/ASTI_DTO")]
+    [System.SerializableAttribute()]
+    public partial class City : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CityIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CityNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CityID {
+            get {
+                return this.CityIDField;
+            }
+            set {
+                if ((this.CityIDField.Equals(value) != true)) {
+                    this.CityIDField = value;
+                    this.RaisePropertyChanged("CityID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CityName {
+            get {
+                return this.CityNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CityNameField, value) != true)) {
+                    this.CityNameField = value;
+                    this.RaisePropertyChanged("CityName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
@@ -97,10 +158,10 @@ namespace ConsoleClient.ServiceReference1 {
         System.Threading.Tasks.Task SendMessageAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCityes", ReplyAction="http://tempuri.org/IService1/GetCityesResponse")]
-        DTO_Lib.City[] GetCityes();
+        ConsoleClient.ServiceReference1.City[] GetCityes();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetCityes", ReplyAction="http://tempuri.org/IService1/GetCityesResponse")]
-        System.Threading.Tasks.Task<DTO_Lib.City[]> GetCityesAsync();
+        System.Threading.Tasks.Task<ConsoleClient.ServiceReference1.City[]> GetCityesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -154,11 +215,11 @@ namespace ConsoleClient.ServiceReference1 {
             return base.Channel.SendMessageAsync();
         }
         
-        public DTO_Lib.City[] GetCityes() {
+        public ConsoleClient.ServiceReference1.City[] GetCityes() {
             return base.Channel.GetCityes();
         }
         
-        public System.Threading.Tasks.Task<DTO_Lib.City[]> GetCityesAsync() {
+        public System.Threading.Tasks.Task<ConsoleClient.ServiceReference1.City[]> GetCityesAsync() {
             return base.Channel.GetCityesAsync();
         }
     }

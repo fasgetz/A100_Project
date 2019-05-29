@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/A100_Service" />
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/DTO_Lib" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ASTI_DTO" />
   <xs:element name="GetData">
     <xs:complexType>
       <xs:sequence>
@@ -48,7 +48,7 @@
   <xs:element name="GetCityesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DTO_Lib" minOccurs="0" name="GetCityesResult" nillable="true" type="q3:ArrayOfCity" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ASTI_DTO" minOccurs="0" name="GetCityesResult" nillable="true" type="q3:ArrayOfCity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

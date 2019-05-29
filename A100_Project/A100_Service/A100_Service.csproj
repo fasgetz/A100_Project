@@ -192,9 +192,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTO_Lib\DTO_Lib.csproj">
-      <Project>{454804ee-3547-4f20-8268-296a88bf8a77}</Project>
-      <Name>DTO_Lib</Name>
+    <ProjectReference Include="..\ASTI_DTO\ASTI_DTO.csproj">
+      <Project>{f24d7a11-d46e-4367-b23b-73d2dad86d04}</Project>
+      <Name>ASTI_DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

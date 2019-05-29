@@ -58,11 +58,14 @@
     <None Include="Connected Services\ServiceReference1\A100_Service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceReference1\ConsoleClient.ServiceReference1.CompositeType.datasource">
+    <None Include="Connected Services\ServiceReference1\ASTI_DTO.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReference1\ConsoleClient.ServiceReference1.City.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ServiceReference1\DTO_Lib.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Connected Services\ServiceReference1\ConsoleClient.ServiceReference1.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\service.wsdl" />
     <None Include="Connected Services\ServiceReference1\service.xsd">
@@ -75,12 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DTO_Lib\DTO_Lib.csproj">
-      <Project>{454804ee-3547-4f20-8268-296a88bf8a77}</Project>
-      <Name>DTO_Lib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
