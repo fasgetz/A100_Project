@@ -1,0 +1,215 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F3C2CC31-DB7A-4843-8B6E-A974554A5932}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>A100_Service</RootNamespace>
+    <AssemblyName>A100_Service</AssemblyName>
+    <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <XsdCodeGenEnabled>True</XsdCodeGenEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataBase\aspASTI\aspASTI.cs" />
+    <Compile Include="DataBase\aspASTI\AspNetRoles.cs" />
+    <Compile Include="DataBase\aspASTI\AspNetUserClaims.cs" />
+    <Compile Include="DataBase\aspASTI\AspNetUserLogins.cs" />
+    <Compile Include="DataBase\aspASTI\AspNetUsers.cs" />
+    <Compile Include="DataBase\aspASTI\C__MigrationHistory.cs" />
+    <Compile Include="DataBase\aspASTI\v_UsersWithLic.cs" />
+    <Compile Include="DataBase\ASTI\ASTI.cs" />
+    <Compile Include="DataBase\ASTI\BasicCheckList.cs" />
+    <Compile Include="DataBase\ASTI\BasicDamage.cs" />
+    <Compile Include="DataBase\ASTI\BoltedJoint.cs" />
+    <Compile Include="DataBase\ASTI\CheckList.cs" />
+    <Compile Include="DataBase\ASTI\CheckListCriteria.cs" />
+    <Compile Include="DataBase\ASTI\CheckListCriteriesTile.cs" />
+    <Compile Include="DataBase\ASTI\CheckListRecomendation.cs" />
+    <Compile Include="DataBase\ASTI\CheckListTile.cs" />
+    <Compile Include="DataBase\ASTI\City.cs" />
+    <Compile Include="DataBase\ASTI\ClientLicense.cs" />
+    <Compile Include="DataBase\ASTI\ClientPermissions.cs" />
+    <Compile Include="DataBase\ASTI\ClientSchemePermissions.cs" />
+    <Compile Include="DataBase\ASTI\Company.cs" />
+    <Compile Include="DataBase\ASTI\Conclusion.cs" />
+    <Compile Include="DataBase\ASTI\ConclusionPart.cs" />
+    <Compile Include="DataBase\ASTI\Connection.cs" />
+    <Compile Include="DataBase\ASTI\Control.cs" />
+    <Compile Include="DataBase\ASTI\ControlEmployees.cs" />
+    <Compile Include="DataBase\ASTI\ControlMetod.cs" />
+    <Compile Include="DataBase\ASTI\ControlProgram.cs" />
+    <Compile Include="DataBase\ASTI\ControlProgramElement.cs" />
+    <Compile Include="DataBase\ASTI\DefectType.cs" />
+    <Compile Include="DataBase\ASTI\Deviation.cs" />
+    <Compile Include="DataBase\ASTI\DeviationLocation.cs" />
+    <Compile Include="DataBase\ASTI\DeviationOrientation.cs" />
+    <Compile Include="DataBase\ASTI\DeviationPlateLocation.cs" />
+    <Compile Include="DataBase\ASTI\Document.cs" />
+    <Compile Include="DataBase\ASTI\Element.cs" />
+    <Compile Include="DataBase\ASTI\ElementsOfType.cs" />
+    <Compile Include="DataBase\ASTI\Employee.cs" />
+    <Compile Include="DataBase\ASTI\EmployeeConnection.cs" />
+    <Compile Include="DataBase\ASTI\ExpertCommission.cs" />
+    <Compile Include="DataBase\ASTI\JornalCategory.cs" />
+    <Compile Include="DataBase\ASTI\Journal.cs" />
+    <Compile Include="DataBase\ASTI\Licenses.cs" />
+    <Compile Include="DataBase\ASTI\Log.cs" />
+    <Compile Include="DataBase\ASTI\Map.cs" />
+    <Compile Include="DataBase\ASTI\NuevoExpertComission.cs" />
+    <Compile Include="DataBase\ASTI\Orientation.cs" />
+    <Compile Include="DataBase\ASTI\Page.cs" />
+    <Compile Include="DataBase\ASTI\PartialTO.cs" />
+    <Compile Include="DataBase\ASTI\Photomaterial.cs" />
+    <Compile Include="DataBase\ASTI\PhotoType.cs" />
+    <Compile Include="DataBase\ASTI\Recomendation.cs" />
+    <Compile Include="DataBase\ASTI\Resoult.cs" />
+    <Compile Include="DataBase\ASTI\RiskLevel.cs" />
+    <Compile Include="DataBase\ASTI\Safety.cs" />
+    <Compile Include="DataBase\ASTI\SafetyList.cs" />
+    <Compile Include="DataBase\ASTI\SafetyListCategory.cs" />
+    <Compile Include="DataBase\ASTI\SafetyListCriteria.cs" />
+    <Compile Include="DataBase\ASTI\ShortUser.cs" />
+    <Compile Include="DataBase\ASTI\Specifications.cs" />
+    <Compile Include="DataBase\ASTI\SpecificationsElement.cs" />
+    <Compile Include="DataBase\ASTI\StillageTest.cs" />
+    <Compile Include="DataBase\ASTI\StillageType.cs" />
+    <Compile Include="DataBase\ASTI\StockElements.cs" />
+    <Compile Include="DataBase\ASTI\Support.cs" />
+    <Compile Include="DataBase\ASTI\View_1.cs" />
+    <Compile Include="DataBase\ASTI\Vik.cs" />
+    <Compile Include="DataBase\ASTI\VikElement.cs" />
+    <Compile Include="DataBase\ASTI\v_ClientLicenses.cs" />
+    <Compile Include="DataBase\ASTI\v_Clients.cs" />
+    <Compile Include="DataBase\ASTI\v_CompanyLicenses.cs" />
+    <Compile Include="DataBase\ASTI\v_FindedDamages.cs" />
+    <Compile Include="DataBase\ASTI\v_GetBasicDamage.cs" />
+    <Compile Include="DataBase\ASTI\v_GetControl.cs" />
+    <Compile Include="DataBase\ASTI\v_GetDamage.cs" />
+    <Compile Include="DataBase\ASTI\v_GetDeviationByUnit.cs" />
+    <Compile Include="DataBase\ASTI\v_GetElementsLoad.cs" />
+    <Compile Include="DataBase\ASTI\v_GetMap.cs" />
+    <Compile Include="DataBase\ASTI\v_GetPartialTOChart.cs" />
+    <Compile Include="DataBase\ASTI\v_GetProjects.cs" />
+    <Compile Include="DataBase\ASTI\v_GetRadarSafetyChart.cs" />
+    <Compile Include="DataBase\ASTI\v_GetSafety.cs" />
+    <Compile Include="DataBase\ASTI\v_GetSafetyChart.cs" />
+    <Compile Include="DataBase\ASTI\v_GetSpecificationsElement.cs" />
+    <Compile Include="DataBase\ASTI\v_GetSpecificationsElement_old.cs" />
+    <Compile Include="DataBase\ASTI\v_GetVik.cs" />
+    <Compile Include="DataBase\ASTI\v_GetVikByUnit.cs" />
+    <Compile Include="DataBase\ASTI\v_GetWarhouses.cs" />
+    <Compile Include="DataBase\ASTI\v_GetWork.cs" />
+    <Compile Include="DataBase\ASTI\v_LogEvents.cs" />
+    <Compile Include="DataBase\ASTI\v_Projects.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportBasicCheckList.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportBoltedJoint.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportCheckList.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportClientDocuments.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportConsolidatedStoika.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportControlProgram.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportDamage.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportDeviation.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportPhotomaterial.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportRecomendation.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportReferenceCheckList.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportReferenceCheckListAct.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportRS.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSeBalka.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSEost.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSERama.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSeStoika.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSpecifications.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportSpecificationsElement.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportStillageLoadTest.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportVik.cs" />
+    <Compile Include="DataBase\ASTI\v_ReportVikByName.cs" />
+    <Compile Include="DataBase\ASTI\v_RobustoVIK.cs" />
+    <Compile Include="DataBase\ASTI\v_Specifications.cs" />
+    <Compile Include="DataBase\ASTI\v_SpecificationsElementSize.cs" />
+    <Compile Include="DataBase\ASTI\v_StockElements.cs" />
+    <Compile Include="DataBase\ASTI\v_testProp.cs" />
+    <Compile Include="DataBase\ASTI\v_test_ellcount.cs" />
+    <Compile Include="DataBase\ASTI\v_test_red.cs" />
+    <Compile Include="DataBase\ASTI\v_Vik.cs" />
+    <Compile Include="DataBase\ASTI\v_WarehouseKey.cs" />
+    <Compile Include="DataBase\ASTI\v_Warehouses.cs" />
+    <Compile Include="DataBase\ASTI\v_WarhouseLicenses.cs" />
+    <Compile Include="DataBase\ASTI\Warhouse.cs" />
+    <Compile Include="IService1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio</VSToolsPath>
+    <WcfServiceModelTargetPath>$(VSToolsPath)\WCF</WcfServiceModelTargetPath>
+  </PropertyGroup>
+  <Import Project="$(WcfServiceModelTargetPath)\Microsoft.VisualStudio.ServiceModel.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
+        <WcfProjectProperties>
+          <AutoStart>True</AutoStart>
+        </WcfProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
