@@ -1,4 +1,6 @@
-﻿using System;
+﻿using A100_Service.DataBase.ASTI;
+using A100_Service.DataBase.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -22,23 +24,36 @@ namespace A100_Service.Services.ASTI
 
             try
             {
-                using (DataBase.ASTI.ASTI db = new DataBase.ASTI.ASTI())
-                {
-                    var list = db.City.ToList();
+                IRepository<City> db = new EFGenericRepository<City>(new DataBase.ASTI.ASTI());
+
+                var list = db.GetAllList();
+
+                var nes = from b in list
+                          select new ASTI_DTO.City()
+                          {
+                              CityID = b.CityID,
+                              CityName = b.CityName
+                          };
+
+                return nes.ToList();
+
+                //using (DataBase.ASTI.ASTI db = new DataBase.ASTI.ASTI())
+                //{
+                //    var list = db.City.ToList();
 
 
-                    var nes = from b in list
-                              select new ASTI_DTO.City()
-                              {
-                                  CityID = b.CityID,
-                                  CityName = b.CityName
-                              };
+                //    var nes = from b in list
+                //              select new ASTI_DTO.City()
+                //              {
+                //                  CityID = b.CityID,
+                //                  CityName = b.CityName
+                //              };
 
 
-                    return nes.ToList();
-                }
+                //    return nes.ToList();
+                //}
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

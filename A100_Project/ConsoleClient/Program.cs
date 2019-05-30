@@ -18,8 +18,7 @@ namespace ConsoleClient
 
 
                 Console.WriteLine(client.GetString("hello world!"));
-
-
+                
                 var list = client.GetCityes();
 
                 foreach (var item in client.GetCityesAsync().Result)

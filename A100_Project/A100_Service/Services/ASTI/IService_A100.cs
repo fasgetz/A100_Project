@@ -20,5 +20,8 @@ namespace A100_Service.Services.ASTI
 
         [OperationContract]
         string GetString(string name);
+
+
+
     }
 }

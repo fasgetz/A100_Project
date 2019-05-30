@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ASTI_DTO
 {
-    public class Connection
+    using System;
+
+    public partial class Connection
     {
+        public int ConnetionKey { get; set; }
+
+        public int? WKey { get; set; }
+
+        public string UserKey { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public DateTime? ExperyDate { get; set; }
     }
 }
