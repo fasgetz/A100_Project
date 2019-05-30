@@ -12,9 +12,7 @@ namespace A100_AspNetCore.Controllers
     {
         public IActionResult Index()
         {
-            var client = new ServiceReference1.Service1Client();
 
-            ViewBag.cities = client.GetCityesAsync().Result;
 
             return View();
         }

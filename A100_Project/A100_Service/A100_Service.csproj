@@ -180,9 +180,9 @@
     <Compile Include="DataBase\ASTI\v_Warehouses.cs" />
     <Compile Include="DataBase\ASTI\v_WarhouseLicenses.cs" />
     <Compile Include="DataBase\ASTI\Warhouse.cs" />
-    <Compile Include="Services\IService1.cs" />
+    <Compile Include="Services\ASTI\IService_A100.cs" />
+    <Compile Include="Services\ASTI\Service_A100.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Service1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

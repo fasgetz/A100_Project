@@ -11,7 +11,7 @@ namespace ConsoleHost
     {
         static void Main(string[] args)
         {
-            using (var host = new ServiceHost(typeof(A100_Service.Services.Service1)))
+            using (var host = new ServiceHost(typeof(A100_Service.Services.ASTI.Service_A100)))
             {
                 host.Open(); // Открываем хост
                 Console.WriteLine("Хост открыт");
