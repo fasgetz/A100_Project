@@ -1,5 +1,6 @@
 namespace ASTI_DTO
 {
+    using ASTI_DTOTI;
     using System;
     using System.Collections.Generic;
 

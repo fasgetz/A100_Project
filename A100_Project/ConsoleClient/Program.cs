@@ -8,6 +8,9 @@ namespace ConsoleClient
 {
     class Program
     {
+
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Начало");
@@ -25,6 +28,17 @@ namespace ConsoleClient
                 {
                     Console.WriteLine(item.CityName);
                 }
+
+
+                string json = JsonLibrary.JsonFunctional.GetJson(list);
+
+                Console.WriteLine(json);
+
+                List<ASTI_DTO.City> kek = JsonLibrary.JsonFunctional.GetObjects<List<ASTI_DTO.City>>(json);
+
+                Console.WriteLine(kek.Count().ToString());
+                
+                
 
             }
 

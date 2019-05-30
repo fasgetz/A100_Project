@@ -5,6 +5,7 @@ namespace ASTI_DTO
 
 
     public class ControlMetod
+    { 
         public ControlMetod()
         {
             Control = new HashSet<Control>();

@@ -1,13 +1,10 @@
-namespace A100_Service.DataBase.ASTI
+namespace ASTI_DTO
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
-    [Table("Photomaterial")]
-    public partial class Photomaterial
+
+    public class Photomaterial
     {
         public int PhotomaterialID { get; set; }
 
@@ -19,11 +16,8 @@ namespace A100_Service.DataBase.ASTI
 
         public int ResoultID { get; set; }
 
-        [Required]
-        [StringLength(250)]
         public string PhotoСaption { get; set; }
 
-        [Required]
         public byte[] Photo { get; set; }
 
         public virtual BasicCheckList BasicCheckList { get; set; }

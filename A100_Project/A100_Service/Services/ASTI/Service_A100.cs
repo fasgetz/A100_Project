@@ -35,6 +35,8 @@ namespace A100_Service.Services.ASTI
                               CityName = b.CityName
                           };
 
+                
+
                 return nes.ToList();
 
                 //using (DataBase.ASTI.ASTI db = new DataBase.ASTI.ASTI())

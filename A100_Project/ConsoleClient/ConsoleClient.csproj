@@ -94,6 +94,10 @@
       <Project>{f24d7a11-d46e-4367-b23b-73d2dad86d04}</Project>
       <Name>ASTI_DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JsonLibrary\JsonLibrary.csproj">
+      <Project>{8b9111d0-183d-4dbf-aa05-b8cf1db0f3d8}</Project>
+      <Name>JsonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
