@@ -17,5 +17,8 @@ namespace A100_Service.Services.ASTI
 
         [OperationContract]
         List<ASTI_DTO.City> GetCityes();
+
+        [OperationContract]
+        string GetString(string name);
     }
 }

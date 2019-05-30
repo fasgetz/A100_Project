@@ -10,6 +10,7 @@
         public ASTI()
             : base("name=ASTI")
         {
+            var ensureDllIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 
         public virtual DbSet<BasicCheckList> BasicCheckList { get; set; }

@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\ASTI_Service\Reference.cs">
+    <Compile Include="Connected Services\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -55,38 +55,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\ASTI_Service\ASTI_DTO.xsd">
+    <None Include="Connected Services\Service\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ASTI_Service\ConsoleClient.ASTI_Service.City.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ASTI_Service\service.wsdl" />
-    <None Include="Connected Services\ASTI_Service\service.xsd">
+    <None Include="Connected Services\Service\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ASTI_Service\service1.xsd">
+    <None Include="Connected Services\Service\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Service\Service_A100.wsdl" />
+    <None Include="Properties\DataSources\ASTI_DTO.City.datasource" />
     <None Include="Properties\DataSources\DTO_Lib.City.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ASTI_Service\" />
+    <WCFMetadataStorage Include="Connected Services\Service\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ASTI_Service\configuration91.svcinfo" />
+    <None Include="Connected Services\Service\item.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ASTI_Service\configuration.svcinfo" />
+    <None Include="Connected Services\Service\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ASTI_Service\Reference.svcmap">
+    <None Include="Connected Services\Service\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Service\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASTI_DTO\ASTI_DTO.csproj">
+      <Project>{f24d7a11-d46e-4367-b23b-73d2dad86d04}</Project>
+      <Name>ASTI_DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

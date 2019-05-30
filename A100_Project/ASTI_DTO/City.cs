@@ -4,6 +4,8 @@ using System.Text;
 
 namespace ASTI_DTO
 {
+
+    [Serializable]
     public class City
     {
 
