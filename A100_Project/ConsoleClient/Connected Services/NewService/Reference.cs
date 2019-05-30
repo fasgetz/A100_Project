@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ConsoleClient.Service {
+namespace ConsoleClient.NewService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.IService_A100")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="NewService.IService_A100")]
     public interface IService_A100 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService_A100/SendMessage", ReplyAction="http://tempuri.org/IService_A100/SendMessageResponse")]
@@ -35,12 +35,12 @@ namespace ConsoleClient.Service {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IService_A100Channel : ConsoleClient.Service.IService_A100, System.ServiceModel.IClientChannel {
+    public interface IService_A100Channel : ConsoleClient.NewService.IService_A100, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class Service_A100Client : System.ServiceModel.ClientBase<ConsoleClient.Service.IService_A100>, ConsoleClient.Service.IService_A100 {
+    public partial class Service_A100Client : System.ServiceModel.ClientBase<ConsoleClient.NewService.IService_A100>, ConsoleClient.NewService.IService_A100 {
         
         public Service_A100Client() {
         }

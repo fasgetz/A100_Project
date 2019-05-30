@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace A100_Service.Services.ASTI
@@ -16,9 +17,11 @@ namespace A100_Service.Services.ASTI
 
 
         [OperationContract]
-        List<ASTI_DTO.City> GetCityes();
+        [WebGet(UriTemplate = "requests")]
+        string GetCityesJson();
 
         [OperationContract]
+        [WebGet(UriTemplate = "MyMethod/MyParam={name}")]
         string GetString(string name);
 
 

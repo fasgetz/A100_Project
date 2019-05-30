@@ -1,5 +1,6 @@
 ﻿using A100_Service.DataBase.ASTI;
 using A100_Service.DataBase.Repositories;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace A100_Service.Services.ASTI
             Console.WriteLine("Hello world!");
         }
 
-        public List<ASTI_DTO.City> GetCityes()
+        public string GetCityesJson()
         {
             Console.WriteLine("Возвращаем города");
 
@@ -35,25 +36,23 @@ namespace A100_Service.Services.ASTI
                               CityName = b.CityName
                           };
 
+                string json = JsonLibrary.JsonFunctional.GetJson(nes);
+
+
+
+
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<List<City>, List<ASTI_DTO.City>>();
+                });
+                IMapper mapper = config.CreateMapper();
                 
 
-                return nes.ToList();
-
-                //using (DataBase.ASTI.ASTI db = new DataBase.ASTI.ASTI())
-                //{
-                //    var list = db.City.ToList();
+                
 
 
-                //    var nes = from b in list
-                //              select new ASTI_DTO.City()
-                //              {
-                //                  CityID = b.CityID,
-                //                  CityName = b.CityName
-                //              };
+                return json;
 
-
-                //    return nes.ToList();
-                //}
             }
             catch (Exception ex)
             {
@@ -66,6 +65,10 @@ namespace A100_Service.Services.ASTI
 
         public string GetString(string name)
         {
+
+
+            
+
             return name;
         }
     }

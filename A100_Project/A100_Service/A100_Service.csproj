@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -54,6 +57,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -197,13 +201,22 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\aspASTI_DTO\aspASTI_DTO.csproj">
+      <Project>{a976bb66-2d31-4ac5-b1f8-d544b5658ed3}</Project>
+      <Name>aspASTI_DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ASTI_DTO\ASTI_DTO.csproj">
       <Project>{f24d7a11-d46e-4367-b23b-73d2dad86d04}</Project>
       <Name>ASTI_DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JsonLibrary\JsonLibrary.csproj">
+      <Project>{8b9111d0-183d-4dbf-aa05-b8cf1db0f3d8}</Project>
+      <Name>JsonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessLogic\API\" />
+    <Folder Include="DataBase\Mapper\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

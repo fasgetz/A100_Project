@@ -21,22 +21,30 @@ namespace ConsoleClient
 
 
                 Console.WriteLine(client.GetString("hello world!"));
-                
-                var list = client.GetCityes();
 
-                foreach (var item in client.GetCityesAsync().Result)
+
+                var list = JsonLibrary.JsonFunctional.GetObjects<List<ASTI_DTO.City>>(client.GetCityesJson());
+                
+
+                foreach (var item in list)
                 {
                     Console.WriteLine(item.CityName);
                 }
+                //var list = client.GetCityes();
+
+                //foreach (var item in client.GetCityesAsync().Result)
+                //{
+                //    Console.WriteLine(item.CityName);
+                //}
 
 
-                string json = JsonLibrary.JsonFunctional.GetJson(list);
+                //string json = JsonLibrary.JsonFunctional.GetJson(list);
 
-                Console.WriteLine(json);
+                //Console.WriteLine(json);
 
-                List<ASTI_DTO.City> kek = JsonLibrary.JsonFunctional.GetObjects<List<ASTI_DTO.City>>(json);
+                //List<ASTI_DTO.City> kek = JsonLibrary.JsonFunctional.GetObjects<List<ASTI_DTO.City>>(json);
 
-                Console.WriteLine(kek.Count().ToString());
+                //Console.WriteLine(kek.Count().ToString());
                 
                 
 
