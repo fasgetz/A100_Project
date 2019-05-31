@@ -1,30 +1,29 @@
-﻿using System;
+﻿using A100_Service.DataBase.ASTI;
+using A100_Service.Services.ASTI.ServicesInterfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
 
 namespace A100_Service.Services.ASTI
 {
+
+    /// <summary>
+    /// Общий интерфейс сервиса, который представлен в REST архитектуре
+    /// </summary>
+
+
+
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени интерфейса "IService_A100" в коде и файле конфигурации.
     [ServiceContract]
     public interface IService_A100
     {
+
         [OperationContract]
         void SendMessage();
 
 
-        [OperationContract]
-        [WebGet(UriTemplate = "requests")]
-        string GetCityesJson();
-
-        [OperationContract]
-        [WebGet(UriTemplate = "MyMethod/MyParam={name}")]
-        string GetString(string name);
-
-
 
     }
+
+
 }

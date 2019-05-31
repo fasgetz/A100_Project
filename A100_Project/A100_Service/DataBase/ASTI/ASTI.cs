@@ -10,6 +10,7 @@
         public ASTI()
             : base("name=ASTI")
         {
+            Configuration.ProxyCreationEnabled = false;
             var ensureDllIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 

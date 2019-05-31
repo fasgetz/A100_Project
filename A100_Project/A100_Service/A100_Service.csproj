@@ -190,6 +190,8 @@
     <Compile Include="DataBase\Repositories\EFGenericRepository.cs" />
     <Compile Include="DataBase\Repositories\IRepository.cs" />
     <Compile Include="Services\ASTI\IService_A100.cs" />
+    <Compile Include="Services\ASTI\BusinessLogic\CityImplement.cs" />
+    <Compile Include="Services\ASTI\ServicesInterfaces\ITypeCity.cs" />
     <Compile Include="Services\ASTI\Service_A100.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,10 +216,7 @@
       <Name>JsonLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BusinessLogic\API\" />
-    <Folder Include="DataBase\Mapper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
