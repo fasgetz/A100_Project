@@ -18,6 +18,12 @@ namespace UnitTests_A100Service.TestingBusinessLogic
     [TestFixture]
     class CityLogicTest
     {
+        #region Секция свойств
+
+        Uri uri = new Uri("http://localhost:9000/City/GetCity?name=Москва"); // Адрес
+
+        #endregion
+
 
         #region Секция метода GetCity, который получает город по имени
 
@@ -29,7 +35,6 @@ namespace UnitTests_A100Service.TestingBusinessLogic
             using (var client = new HttpClient())
             {
                 // Arrange
-                var uri = new Uri("http://localhost:9000/City/GetCity?name=Москва"); // Адрес 
                 City CityEXP = new City() { CityName = "Москва" }; // Что получаем
 
                 // Act
@@ -43,9 +48,6 @@ namespace UnitTests_A100Service.TestingBusinessLogic
             }
            
         }
-
-
-
 
         #endregion
 

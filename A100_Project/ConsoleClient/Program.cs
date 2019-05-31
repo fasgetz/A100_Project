@@ -16,8 +16,7 @@ namespace ConsoleClient
 
 
 
-            
-            
+           
             Console.WriteLine("Начало");
 
 
@@ -45,7 +44,7 @@ namespace ConsoleClient
 
             using (var client = new HttpClient())
             {
-                var uri = new Uri("http://localhost:9000/GetCityes");
+                var uri = new Uri("http://localhost:9000/City/GetAllCityes");
                 response = await client.GetStringAsync(uri);
 
                 try

@@ -22,7 +22,15 @@ namespace A100_Service.Services.ASTI
         void SendMessage();
 
 
+        // POST - метод, который добавляет город
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "TestPOST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        string Test();
 
+
+        //[WebInvoke(Method = "POST", UriTemplate = "requests")]
+        //[OperationContract]
+        //void Save(string test);
     }
 
 

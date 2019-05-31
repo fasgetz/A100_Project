@@ -5,6 +5,7 @@ namespace A100_Service.DataBase.ASTI
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.Serialization;
 
     [Table("City")]
     public partial class City

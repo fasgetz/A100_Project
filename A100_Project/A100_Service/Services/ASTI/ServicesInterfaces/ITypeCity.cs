@@ -24,6 +24,13 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCity?name={name}")]
         City GetCity(string name);
 
-
+        // POST - метод, который добавляет город
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "/AddCity",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json, 
+            Method = "POST")]
+        string AddCity(City city);
     }
 }

@@ -13,6 +13,8 @@ namespace A100_Service.Services.ASTI.BusinessLogic
 
     public class CityImplement : ITypeCity
     {
+
+
         // Метод, который возвращает ВЕСЬ список городов
         public List<City> GetAllCityes()
         {
@@ -41,6 +43,23 @@ namespace A100_Service.Services.ASTI.BusinessLogic
             catch (Exception)
             {
                 return null; // Если город не найден, то возвращаем null
+            }
+        }
+
+
+        // Метод, который добавляет город
+        public string AddCity(City city)
+        {
+            try
+            {
+                IRepository<City> db = new EFGenericRepository<City>(new DataBase.ASTI.ASTI()); // Создаем репозиторий для работы с БД
+                db.Add(city); // Добавляем город в БД
+
+                return $"Город {city.CityName} успешно добавлен!";
+            }
+            catch (Exception)
+            {
+                return $"Город {city.CityName} нельзя добавить";
             }
         }
     }
