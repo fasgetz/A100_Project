@@ -13,12 +13,12 @@ namespace ConsoleHost
         static void Main(string[] args)
         {
             using (var host = new WebServiceHost(typeof(A100_Service.Services.ASTI.Service_A100)))
-            {                
-               
+            {
+
                 host.Open(); // Открываем хост
-                
+
                 Console.WriteLine("Хост открыт");
-                
+
                 Console.ReadKey(); // Заглушка
             }
         }

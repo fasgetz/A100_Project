@@ -17,23 +17,23 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
     {
         // GET - метод, который возвращает ВЕСЬ список городов
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAllCityes")]
-        List<City> GetAllCityes();
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAllCityes?token={token}")]
+        List<City> GetAllCityes(string token);
 
         // GET - метод, который возвращает один город по айди
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCity?name={name}")]
-        City GetCity(string name);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCity?token={token}&name={name}")]
+        City GetCity(string token, string name);
 
         // POST - метод, который добавляет город и возвращает true / false (в случае успеха / неудачи)
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "/AddCity?name={name}",
+            UriTemplate = "/AddCity?token={token}&name={name}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             Method = "POST")]
-        bool AddCity(string name);
+        bool AddCity(string token, string name);
     }
 
 }

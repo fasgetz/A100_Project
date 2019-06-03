@@ -18,14 +18,13 @@ namespace A100_Service.Services.ASTI
     public interface IService_A100
     {
 
-        [OperationContract]
-        void SendMessage();
+        //[OperationContract]
+        //void Authorization(string api);
 
-
-        // POST - метод, который добавляет город
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "TestPOST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string Test();
+        //// POST - метод, который добавляет город и возвращает true / false (в случае успеха / неудачи)
+        //[OperationContract]
+        //[WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "/GetApi")]
+        //string GetApi();
 
 
         //[WebInvoke(Method = "POST", UriTemplate = "requests")]

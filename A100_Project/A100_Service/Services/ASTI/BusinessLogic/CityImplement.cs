@@ -11,7 +11,7 @@ namespace A100_Service.Services.ASTI.BusinessLogic
     /// Класс предоставляет реализацию интерфейса ICity CityImplement
     /// </summary>
 
-    public class CityImplement : ITypeCity
+    public class CityImplement
     {
 
 
