@@ -1,6 +1,7 @@
 ﻿using A100_Service.DataBase.ASTI;
 using A100_Service.Services.ASTI.BusinessLogic;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -24,13 +25,15 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCity?name={name}")]
         City GetCity(string name);
 
-        // POST - метод, который добавляет город
+        // POST - метод, который добавляет город и возвращает true / false (в случае успеха / неудачи)
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "/AddCity",
+            UriTemplate = "/AddCity?name={name}",
             RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json, 
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
             Method = "POST")]
-        string AddCity(City city);
+        bool AddCity(string name);
     }
+
 }

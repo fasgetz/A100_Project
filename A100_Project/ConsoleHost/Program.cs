@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 
 namespace ConsoleHost
 {
@@ -11,9 +12,11 @@ namespace ConsoleHost
     {
         static void Main(string[] args)
         {
-            using (var host = new ServiceHost(typeof(A100_Service.Services.ASTI.Service_A100)))
+            using (var host = new WebServiceHost(typeof(A100_Service.Services.ASTI.Service_A100)))
             {                
+               
                 host.Open(); // Открываем хост
+                
                 Console.WriteLine("Хост открыт");
                 
                 Console.ReadKey(); // Заглушка

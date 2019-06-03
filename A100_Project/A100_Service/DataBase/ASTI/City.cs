@@ -8,6 +8,7 @@ namespace A100_Service.DataBase.ASTI
     using System.Runtime.Serialization;
 
     [Table("City")]
+    [DataContract]
     public partial class City
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -16,9 +17,11 @@ namespace A100_Service.DataBase.ASTI
             Warhouse = new HashSet<Warhouse>();
         }
 
+        [DataMember]
         public int CityID { get; set; }
 
         [StringLength(50)]
+        [DataMember]
         public string CityName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -48,19 +48,25 @@ namespace A100_Service.Services.ASTI.BusinessLogic
 
 
         // Метод, который добавляет город
-        public string AddCity(City city)
+        public bool AddCity(string name)
         {
+
             try
             {
-                IRepository<City> db = new EFGenericRepository<City>(new DataBase.ASTI.ASTI()); // Создаем репозиторий для работы с БД
-                db.Add(city); // Добавляем город в БД
+                if (name != null && name != string.Empty)
+                {
+                    IRepository<City> db = new EFGenericRepository<City>(new DataBase.ASTI.ASTI()); // Создаем репозиторий для работы с БД
+                    db.Add(new City() { CityName = name }); // Добавляем город в БД
+                    return true; // т.к. город успешно добавлен
+                }
 
-                return $"Город {city.CityName} успешно добавлен!";
             }
             catch (Exception)
             {
-                return $"Город {city.CityName} нельзя добавить";
+                // Обработать какую-нибудь ошибку
             }
+
+            return false; // т.к. возникла какая либо ошибка при добавлении города
         }
     }
 }

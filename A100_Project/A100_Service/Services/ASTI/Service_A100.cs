@@ -28,9 +28,9 @@ namespace A100_Service.Services.ASTI
             return new CityImplement().GetCity(name);
         }
 
-        public string AddCity(City city)
+        public bool AddCity(string name)
         {
-            return new CityImplement().AddCity(city);
+            return new CityImplement().AddCity(name);
         }
 
         #endregion
@@ -44,5 +44,17 @@ namespace A100_Service.Services.ASTI
         {
             return "POST!!!!";
         }
+
+
+        public Service_A100()
+        {
+
+        }
+
+        #region Секция ключей
+
+
+
+        #endregion
     }
 }
