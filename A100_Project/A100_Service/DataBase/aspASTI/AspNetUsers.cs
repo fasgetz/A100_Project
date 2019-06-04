@@ -5,7 +5,9 @@ namespace A100_Service.DataBase.aspASTI
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.Serialization;
 
+    [DataContract]
     public partial class AspNetUsers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -18,9 +20,11 @@ namespace A100_Service.DataBase.aspASTI
 
         public string Id { get; set; }
 
+        [DataMember]
         [StringLength(256)]
         public string Email { get; set; }
 
+        [DataMember]
         public bool EmailConfirmed { get; set; }
 
         public string PasswordHash { get; set; }

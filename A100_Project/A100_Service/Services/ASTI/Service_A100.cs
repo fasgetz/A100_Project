@@ -1,4 +1,6 @@
-﻿using A100_Service.DataBase.ASTI;
+﻿using A100_Service.DataBase.aspASTI;
+using A100_Service.DataBase.ASTI;
+using A100_Service.DataBase.Repositories;
 using A100_Service.Exceptions;
 using A100_Service.Services.ASTI.BusinessLogic;
 using A100_Service.Services.ASTI.ServicesInterfaces;
@@ -9,6 +11,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Runtime.Remoting.Contexts;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -20,6 +26,7 @@ using System.Threading.Tasks;
 
 namespace A100_Service.Services.ASTI
 {
+
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service_A100" в коде и файле конфигурации.
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -99,18 +106,17 @@ namespace A100_Service.Services.ASTI
         // Менеджер, который отвечает за безопасность системы, т.к. запрещает использовать методы, если токена нет или он умер
         SecurityManager security;
 
-        public string GetApiKey(string login, string password)
+
+        public Token GetApiKey(string login, string password)
         {
-            // Проверяем данные юзера в БД
+            // Делаем запрос в базу данных
+            // Если пользователь найден, то верни токен
+            if (new EFGenericRepository<AspNetUsers>(new aspASTI()).FindQueryEntity(i => i.Email == login && i.PasswordHash == password) != null)
+                return security.AddToken(login);
 
-            //var item = EncriptionLibrary.Encrypt.EncryptMethod(password);
-            //Console.WriteLine(item);
 
-            //var bytes = Encoding.ASCII.GetBytes(item);
-            //Console.WriteLine(bytes[0].ToString());
-
-            // Возвращаем токен
-            return security.AddToken(login);
+            // Иначе выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить города"));
         }
 
         // Возвращаем дату жизни токена, если он найден
@@ -124,3 +130,4 @@ namespace A100_Service.Services.ASTI
     }
 
 }
+

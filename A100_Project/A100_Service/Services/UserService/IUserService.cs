@@ -1,4 +1,5 @@
-﻿using System;
+﻿using A100_Service.Services.UserService.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -14,7 +15,7 @@ namespace A100_Service.Services.UserService
         // Метод, который получает API Key, если авторизация прошла успешно
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetApi?login={login}&pass={password}")]
-        string GetApiKey(string login, string password);
+        Token GetApiKey(string login, string password);
 
         // Метод возвращает дату, сколько осталось жить токену
         [OperationContract]

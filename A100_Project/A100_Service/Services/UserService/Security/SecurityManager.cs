@@ -1,4 +1,6 @@
-﻿using System;
+﻿using A100_Service.DataBase.aspASTI;
+using A100_Service.DataBase.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +32,7 @@ namespace A100_Service.Services.UserService.Security
         
 
         // Метод, который добавляет токен в список и возвращает этот токен
-        public string AddToken(string UserLogin)
+        public Token AddToken(string UserLogin)
         {
 
             // Ищем токен по логину
@@ -39,13 +41,23 @@ namespace A100_Service.Services.UserService.Security
             // Если токен не найден, то создай его и добавь в список активных токенов
             if (token == null)
             {
-                token = new Token(UserLogin, 60); // Создаем новый токен
-                tokens.Add(token);
+                // Создаем контекст для работы с БД и ищем пользователя
+                var rep = new EFGenericRepository<AspNetUsers>(new aspASTI()); // Контекст для работы с БД
+                var user = rep.FindQueryEntity(i => i.Email == UserLogin); // Ищем пользователя
+                
+                // Если пользователь найден
+                if (user != null)
+                {
+                    Console.WriteLine(user.EmailConfirmed.ToString());
+                    token = new Token(UserLogin, 60 * 60 * 24, user); // Создаем новый токен
+                    tokens.Add(token); // Добавляем в список
+                }
+
 
                 
             }
 
-            return token.token; // Возвращаем сам ключ токена
+            return token; // Возвращаем сам ключ токена
         }
 
 
