@@ -20,14 +20,14 @@ namespace A100_Service.Services.UserService.Security
 
 
         // Конструктор
-        public Token(string UserLogin, int second)
+        public Token(string login, int second)
         {
             this.token = TokenGenerator.GenerateToken(); // Генерируем токен
             this.startDate = System.DateTime.Now; // Текущая дата
             this.EndDate = startDate.AddSeconds(second); // Время жизни токена + seconds (в секундах)
 
 
-            this.UserLogin = UserLogin; // Присваиваем логин пользователя токену
+            this.UserLogin = login; // Присваиваем логин пользователя токену
         }
     }
 }

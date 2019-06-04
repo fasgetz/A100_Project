@@ -26,9 +26,9 @@ namespace A100_Service.Services.ASTI
         public List<City> GetAllCityes(string token)
         {
             // Если токен найден, то выполни метод
-            if (security.GetLifeDate(token) != null)
+            if (Check(token))
                 return new CityImplement().GetAllCityes();
-
+                
             return null; // Иначе null
         }
 
@@ -36,7 +36,7 @@ namespace A100_Service.Services.ASTI
         public City GetCity(string token, string name)
         {
             // Если токен найден, то выполни метод
-            if (security.GetLifeDate(token) != null)
+            if (Check(token))
                 return new CityImplement().GetCity(name);
 
             return null; // Иначе null
@@ -45,7 +45,7 @@ namespace A100_Service.Services.ASTI
         public bool AddCity(string token, string name)
         {
             // Если токен найден, то выполни метод
-            if (security.GetLifeDate(token) != null)
+            if (Check(token))
                 return new CityImplement().AddCity(name);
 
             return false; // Иначе null
@@ -53,29 +53,47 @@ namespace A100_Service.Services.ASTI
 
         #endregion
 
+        #region Конструктор
 
+        //// Делегат, который принимает токен и возвращает true, если метод можно выполнить
+        public delegate bool CanDo(string token);
+        CanDo Check; // Переменная типа делегата, которая выполнит указанный на нее метод
 
         // Конструктор сервиса
         public Service_A100()
         {
             Random rand = new Random();
 
+            // Выделяем память под защитника системы, который запрещает вызывать методы со стороны, если токен умер
+            security = new SecurityManager();
 
-            security = new SecurityManager(); // Выделяем память
-
-            TimerCallback tm = new TimerCallback(security.DisposeToken); // Метод, который вызывается в таймере
-
-            Timer timer = new Timer(tm, 0, 0, 5000); // Таймер вызывает метод каждые second
-
+            Check = CanEx; // Ссылаемся на метод            
         }
+
+        private bool CanEx(string token)
+        {
+            // Если токен найден, то разреши выполнение метода
+            if (security.GetTokenName(token) != null)
+                return true;
+
+            // Иначе, запрети
+            return false;
+        }
+
+
+        #endregion
 
         #region Секция Безопасности IUserService
 
+        // Менеджер, который отвечает за безопасность системы, т.к. запрещает использовать методы, если токена нет или он умер
+        SecurityManager security;
 
         public string GetApiKey(string login, string password)
         {
             // Проверяем данные юзера в БД
-            return security.AddToken(new Token(login, 30));
+
+            // Возвращаем токен
+            return security.AddToken(login);
         }
 
 
@@ -85,13 +103,9 @@ namespace A100_Service.Services.ASTI
             return security.GetLifeDate(token);
         }
 
-
-
-        SecurityManager security; // Менеджер, который отвечает за безопасность
-
-
         #endregion
 
 
     }
+  
 }

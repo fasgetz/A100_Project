@@ -13,7 +13,7 @@ namespace A100_Service.Services.UserService.Security
         public static string GenerateToken()
         {
             var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            token = token.Replace('+', '_'); // Заменяем символ +, т.к. json не поддерживает +
+            token = token.Replace('+', '_').Replace('/', 's'); // Заменяем символ + и /, т.к. json не поддерживает + и /
             return token;
         }
 

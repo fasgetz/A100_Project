@@ -22,88 +22,82 @@ namespace A100_Service.Services.UserService.Security
 
         public SecurityManager()
         {
-            tokens = new List<Token>();
+            tokens = new List<Token>(); // Инициализируем список активных токенов
         }
 
 
         #region Методы
-
-        // Метод, который удаляет просроченные токены
-        // (Проходится по списку и сравнивает текущую дату с датой, которая является концом срока токена)
-        public void DisposeToken(object obj)
-        {
-            Console.WriteLine($"Очищение {System.DateTime.Now}");
-
-            lock (tokens)
-            {
-                // Перебираем токены
-                foreach (var item in tokens)
-                {
-                    // Если срок истек, то убери, пожалуйста, из списка токенов
-                    if (item.EndDate < System.DateTime.Now)
-                        tokens.Remove(item); // Убираем из списка токенов
-                }
-            }
-
-
-
-            Console.WriteLine($"Всего активных токенов на данный момент {tokens?.Count}");
-        }
+        
 
         // Метод, который добавляет токен в список и возвращает этот токен
-        public string AddToken(Token token)
+        public string AddToken(string UserLogin)
         {
-            lock (tokens)
+
+            // Ищем токен по логину
+            var token = GetTokenLogin(UserLogin);
+
+            // Если токен не найден, то создай его и добавь в список активных токенов
+            if (token == null)
             {
-                // Если у пользователя нету суточного токена, то выдели ему. Иначе отклони
-                if (tokens.FirstOrDefault(i => i.UserLogin == token.UserLogin) == null)
-                {
-                    tokens.Add(token); // Добавь, пожалуйста, токен в список. Т.к. удолетворяет условию
+                token = new Token(UserLogin, 20); // Создаем новый токен
+                tokens.Add(token);
 
-                    // Запускаем метод, который удалит токен через определенное время
-                    Thread thread = new Thread(() =>
-                    {
-                        new TimerCallback(() =>
-                        {
-
-                        }, 0, 0, 0);
-                    });
-                    thread.Start();
-                }
-                    
-
-                return GetToken(token.UserLogin).token; // Возвращаем токен
+                
             }
 
+            return token.token; // Возвращаем сам ключ токена
         }
 
 
-        // Метод, который возвращает токен,  если он у него есть конечно же)))
-        public Token GetToken(string login)
+        // Вспомогательный метод, который проверяет токен на жизнедеятельность и удаляет его, если жизнь завершена
+        private Token ActiveToken(Token token)
         {
-            // Возвращаем токен, если есть совпадение по логину
-            return tokens.FirstOrDefault(i => i.UserLogin == login);
+            // Если токен не пустой
+            if (token != null)
+            {
+                // Если жизненный цикл токена не завершен, то верни его
+                if (token.EndDate > System.DateTime.Now)
+                    return token; // Возвращаем токен
+
+                // Иначе удаляем токен из коллекции
+                tokens.Remove(token);
+            }
+
+            // Возвращаем null, если не удолетворяет ни одному условию
+            return null;
         }
+        
+
+
+        // Метод, который возвращает токен по логину
+        public Token GetTokenLogin(string login)
+        {
+            // Возвращаем токен пользователю, который ищем по логину
+            return ActiveToken(tokens.FirstOrDefault(i => i.UserLogin == login));
+        }
+
+        public Token GetTokenName(string TokenName)
+        {
+            // Возвращаем токен пользователю, который ищем по логину
+            return ActiveToken(tokens.FirstOrDefault(i => i.token == TokenName));
+        }
+
 
         // Метод, который показывает сколько осталось жить токену
         public string GetLifeDate(string token)
         {
-            lock (tokens)
+            var FindToken = GetTokenName(token); // Ищем токен
+
+            // Если токен найден, то верни дату
+            if (FindToken != null)
             {
-                // Находим токен
-                var findtoken = tokens.FirstOrDefault(i => i.token == token);
-
-                // Если токен найден, то верни дату
-                if (findtoken != null)
-                {
-                    var time = findtoken.EndDate.Subtract(System.DateTime.Now);
-                    //Console.WriteLine(time.ToString());
-                    return time.ToString(); // Возвращаем разницу дат (Оставшееся время = Дата конца токена - текущее время)
-                }
-
-                return null;
+                var time = FindToken.EndDate.Subtract(System.DateTime.Now);
+                return time.ToString(); // Возвращаем разницу дат (Оставшееся время = Дата конца токена - текущее время)
             }
 
+
+            // Возвращаем null, если токен не найден
+            return "Токен не найден";
         }
 
         #endregion
