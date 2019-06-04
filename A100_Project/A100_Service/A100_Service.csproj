@@ -43,7 +43,16 @@
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.abstractions\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.identity.entityframeworkcore\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Identity.Core">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.core\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.identitymodel.tokens\5.2.0\lib\netstandard1.4\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -189,6 +198,7 @@
     <Compile Include="DataBase\ASTI\Warhouse.cs" />
     <Compile Include="DataBase\Repositories\EFGenericRepository.cs" />
     <Compile Include="DataBase\Repositories\IRepository.cs" />
+    <Compile Include="Exceptions\Exception.cs" />
     <Compile Include="Services\ASTI\IService_A100.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\CityImplement.cs" />
     <Compile Include="Services\ASTI\ServicesInterfaces\ITypeCity.cs" />
@@ -215,14 +225,16 @@
       <Project>{f24d7a11-d46e-4367-b23b-73d2dad86d04}</Project>
       <Name>ASTI_DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EncriptionLibrary\EncryptionLibrary.csproj">
+      <Project>{21dd548c-6c89-4d25-8917-ff7aac2537af}</Project>
+      <Name>EncryptionLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsonLibrary\JsonLibrary.csproj">
       <Project>{8b9111d0-183d-4dbf-aa05-b8cf1db0f3d8}</Project>
       <Name>JsonLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

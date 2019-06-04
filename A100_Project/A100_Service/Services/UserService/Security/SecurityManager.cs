@@ -39,7 +39,7 @@ namespace A100_Service.Services.UserService.Security
             // Если токен не найден, то создай его и добавь в список активных токенов
             if (token == null)
             {
-                token = new Token(UserLogin, 20); // Создаем новый токен
+                token = new Token(UserLogin, 60); // Создаем новый токен
                 tokens.Add(token);
 
                 

@@ -1,14 +1,20 @@
 ﻿using A100_Service.DataBase.ASTI;
+using A100_Service.Exceptions;
 using A100_Service.Services.ASTI.BusinessLogic;
 using A100_Service.Services.ASTI.ServicesInterfaces;
 using A100_Service.Services.UserService;
 using A100_Service.Services.UserService.Security;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +25,7 @@ namespace A100_Service.Services.ASTI
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service_A100 : IService_A100, ITypeCity, IUserService
     {
-        
+
         #region Секция City
 
         // Возвращаем весь список городов
@@ -27,9 +33,11 @@ namespace A100_Service.Services.ASTI
         {
             // Если токен найден, то выполни метод
             if (Check(token))
-                return new CityImplement().GetAllCityes();
-                
-            return null; // Иначе null
+                return CityImplement.GetAllCityes();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить города"));
         }
 
         // Возвращаем один город по имени
@@ -37,18 +45,21 @@ namespace A100_Service.Services.ASTI
         {
             // Если токен найден, то выполни метод
             if (Check(token))
-                return new CityImplement().GetCity(name);
+                return CityImplement.GetCity(name);
 
-            return null; // Иначе null
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить город"));
         }
 
         public bool AddCity(string token, string name)
         {
             // Если токен найден, то выполни метод
             if (Check(token))
-                return new CityImplement().AddCity(name);
+                return CityImplement.AddCity(name);
 
-            return false; // Иначе null
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Город невозможно добавить"));
         }
 
         #endregion
@@ -76,8 +87,8 @@ namespace A100_Service.Services.ASTI
             if (security.GetTokenName(token) != null)
                 return true;
 
-            // Иначе, запрети
-            return false;
+            throw new FaultException<MyException>(new MyException("Вам отказано в доступе"),
+                new FaultReason("Вам отказано в доступе"));
         }
 
 
@@ -92,10 +103,15 @@ namespace A100_Service.Services.ASTI
         {
             // Проверяем данные юзера в БД
 
+            //var item = EncriptionLibrary.Encrypt.EncryptMethod(password);
+            //Console.WriteLine(item);
+
+            //var bytes = Encoding.ASCII.GetBytes(item);
+            //Console.WriteLine(bytes[0].ToString());
+
             // Возвращаем токен
             return security.AddToken(login);
         }
-
 
         // Возвращаем дату жизни токена, если он найден
         public string GetLifeToken(string token)
@@ -105,7 +121,6 @@ namespace A100_Service.Services.ASTI
 
         #endregion
 
-
     }
-  
+
 }

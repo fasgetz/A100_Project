@@ -1,8 +1,10 @@
 ﻿using A100_Service.DataBase.ASTI;
 using A100_Service.DataBase.Repositories;
+using A100_Service.Exceptions;
 using A100_Service.Services.ASTI.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace A100_Service.Services.ASTI.BusinessLogic
 {
@@ -11,12 +13,12 @@ namespace A100_Service.Services.ASTI.BusinessLogic
     /// Класс предоставляет реализацию интерфейса ICity CityImplement
     /// </summary>
 
-    public class CityImplement
+    public static class CityImplement
     {
 
 
         // Метод, который возвращает ВЕСЬ список городов
-        public List<City> GetAllCityes()
+        public static List<City> GetAllCityes()
         {
             try
             {
@@ -32,7 +34,7 @@ namespace A100_Service.Services.ASTI.BusinessLogic
 
 
         // Метод, который возвращает город по имени
-        public City GetCity(string name)
+        public static City GetCity(string name)
         {
             try
             {
@@ -42,13 +44,14 @@ namespace A100_Service.Services.ASTI.BusinessLogic
             }
             catch (Exception)
             {
-                return null; // Если город не найден, то возвращаем null
+                // Обработать какую-нибудь ошибку
+                return null;
             }
         }
 
 
         // Метод, который добавляет город
-        public bool AddCity(string name)
+        public static bool AddCity(string name)
         {
 
             try
