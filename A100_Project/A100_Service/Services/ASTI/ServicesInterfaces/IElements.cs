@@ -14,12 +14,12 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
     {
         // GET - метод, который получает названия элементов стелажа Element
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetElementNames?token={token}")]
-        List<Specifications> GetElementNames(string token);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "DictionaryElement?token={token}")]
+        List<Element> DictionaryElement(string token);
 
         // GET - метод, который получает соответствие типов стелажей и элементов
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetElementsOfType?token={token}")]
-        List<Specifications> GetElementsOfType(string token);
+        List<ElementsOfType> GetElementsOfType(string token);
     }
 }

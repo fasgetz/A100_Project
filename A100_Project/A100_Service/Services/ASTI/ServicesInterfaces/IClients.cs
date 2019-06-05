@@ -20,6 +20,6 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
         // GET - метод, который получает зоны ответственности клиентов на складе
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetClientSchemePermissions?token={token}&uid={UserID}&rid={ResoultID}")]
-        List<Specifications> GetClientSchemePermissions(string token, int UserID, int ResoultID);
+        List<ClientSchemePermissions> GetClientSchemePermissions(string token, string UserID, int ResoultID);
     }
 }

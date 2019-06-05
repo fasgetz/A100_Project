@@ -206,7 +206,10 @@
     <Compile Include="DataBase\Repositories\IRepository.cs" />
     <Compile Include="Exceptions\Exception.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\ClientsLogic.cs" />
+    <Compile Include="Services\ASTI\BusinessLogic\ElementLogic.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\ProjectsLogic.cs" />
+    <Compile Include="Services\ASTI\BusinessLogic\SchemeLogic.cs" />
+    <Compile Include="Services\ASTI\BusinessLogic\SpecificationsLogic.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\VikLogic.cs" />
     <Compile Include="Services\ASTI\IService_A100.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\CityImplement.cs" />

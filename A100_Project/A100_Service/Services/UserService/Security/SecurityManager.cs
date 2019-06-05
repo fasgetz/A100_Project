@@ -50,12 +50,9 @@ namespace A100_Service.Services.UserService.Security
                 // Если пользователь найден
                 if (user != null)
                 {
-                    Console.WriteLine(user.EmailConfirmed.ToString());
                     token = new Token(UserLogin, 60 * 60 * 24, user); // Создаем новый токен
                     tokens.Add(token); // Добавляем в список
                 }
-
-
                 
             }
 

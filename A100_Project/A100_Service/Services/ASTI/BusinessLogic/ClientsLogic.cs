@@ -12,7 +12,12 @@ namespace A100_Service.Services.ASTI.BusinessLogic
     {
         public static List<Employee> GetEmployeesClients()
         {
-            return new EFGenericRepository<Employee>(new DataBase.ASTI.ASTI()).GetQueryList(i => i.isClient == false);
+            return new EFGenericRepository<Employee>(new DataBase.ASTI.ASTI()).GetQueryList(i => i.isClient == true);
+        }
+
+        public static List<ClientSchemePermissions> GetClientSchemePermissions(string UserID, int ResoultID)
+        {
+            return new EFGenericRepository<ClientSchemePermissions>(new DataBase.ASTI.ASTI()).GetQueryList(i => i.UserID == UserID && i.ResoultID == ResoultID);
         }
     }
 }

@@ -20,26 +20,26 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
         // GET - метод, который получает элементы стеллажей по ResoultID
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetSpecificationElement?token={token}&id={ResoultID}")]
-        List<Specifications> GetSpecificationElement(string token, int ResoultID);
+        List<v_GetSpecificationsElement> GetSpecificationElement(string token, int ResoultID);
 
         // GET - метод, который получает спецификации (типы стелажей) по ResoultID
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetDeviation?token={token}&id={ResoultID}")]
-        List<Specifications> GetDeviation(string token, int ResoultID);
+        List<Deviation> GetDeviation(string token, int ResoultID);
 
         // GET - метод, который получает типы дефектов
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetDefectTypes?token={token}")]
-        List<Specifications> GetDefectTypes(string token);
+        List<DefectType> GetDefectTypes(string token);
 
         // GET - метод, который получает названия и типы уровней риска
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "DictionaryRiskLevel?token={token}")]
-        List<Specifications> DictionaryRiskLevel(string token);
+        List<RiskLevel> DictionaryRiskLevel(string token);
 
         // GET - метод, который получает названия и типы уровней риска
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetUserRoles?token={token}")]
-        List<Specifications> GetUserRoles(string token);
+        List<ClientPermissions> GetUserRoles(string token);
     }
 }

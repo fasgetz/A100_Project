@@ -30,7 +30,7 @@ namespace A100_Service.Services.ASTI
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service_A100" в коде и файле конфигурации.
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class Service_A100 : IService_A100, ITypeCity, IUserService, IProjects, IVik, IClients
+    public class Service_A100 : IService_A100, ITypeCity, IUserService, IProjects, IVik, IClients, IElements, IScheme, ISpecifications
     {
 
         #region Секция City
@@ -229,12 +229,145 @@ namespace A100_Service.Services.ASTI
 
 
             // Иначе, выдай экзепшен
-            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+            throw new FaultException<MyException>(new MyException("Невозможно получить клиентов"));
         }
 
-        public List<Specifications> GetClientSchemePermissions(string token, int UserID, int ResoultID)
+        public List<ClientSchemePermissions> GetClientSchemePermissions(string token, string UserID, int ResoultID)
         {
-            throw new NotImplementedException();
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ClientsLogic.GetClientSchemePermissions(UserID, ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить клиентов"));
+        }
+
+
+
+        #endregion
+
+        #region Секция элементов
+
+        public List<Element> DictionaryElement(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ElementLogic.GetElements();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить элементы"), "Невозможно получить элементы");
+        }
+
+        public List<ElementsOfType> GetElementsOfType(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ElementLogic.GetElementsOfType();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить элементы"), "Невозможно получить элементы");
+        }
+
+
+
+        #endregion
+
+        #region Секция схемы
+
+        public List<v_GetMap> GetMap(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SchemeLogic.GetMap(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить схему"), "Не удалось загрузить схему");
+        }
+
+        public List<PartialTO> GetPartialTO(string token, int rid)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SchemeLogic.GetPartialTO(rid);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить схему"), "Не удалось загрузить схему");
+        }
+
+        #endregion
+
+        #region Секция спецификации
+
+        public List<Specifications> GetSpecifications(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.GetSpecifications(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
+        }
+
+
+        List<v_GetSpecificationsElement> ISpecifications.GetSpecificationElement(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.GetSpecificationsElement(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
+        }
+
+        List<Deviation> ISpecifications.GetDeviation(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.GetDeviation(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
+        }
+
+        List<DefectType> ISpecifications.GetDefectTypes(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.GetDefectTypes();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
+        }
+
+        List<RiskLevel> ISpecifications.DictionaryRiskLevel(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.DictionaryRiskLevel();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
+        }
+
+        List<ClientPermissions> ISpecifications.GetUserRoles(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return SpecificationsLogic.GetClientPermissions();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Не удалось загрузить спецификацию"), "Не удалось загрузить спецификацию");
         }
 
         #endregion
