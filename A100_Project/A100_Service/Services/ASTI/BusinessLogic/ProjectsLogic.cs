@@ -16,10 +16,9 @@ namespace A100_Service.Services.ASTI.BusinessLogic
     public static class ProjectsLogic
     {
 
-        // Метод, который получает VIK проекта по ResoultID
-        public static List<v_GetVik> GetVIK(int ResoultID)
+        public static Control GetProjectData(string project)
         {
-            return new EFGenericRepository<v_GetVik>(new DataBase.ASTI.ASTI()).GetQueryList(i => i.ResoultID == ResoultID);
+            return new EFGenericRepository<Control>(new DataBase.ASTI.ASTI()).FindQueryEntity(i => i.ProjectNumber == project);
         }
 
 

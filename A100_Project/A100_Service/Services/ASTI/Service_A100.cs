@@ -30,7 +30,7 @@ namespace A100_Service.Services.ASTI
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service_A100" в коде и файле конфигурации.
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class Service_A100 : IService_A100, ITypeCity, IUserService, IProjects
+    public class Service_A100 : IService_A100, ITypeCity, IUserService, IProjects, IVik, IClients
     {
 
         #region Секция City
@@ -95,16 +95,20 @@ namespace A100_Service.Services.ASTI
             throw new FaultException<MyException>(new MyException("Невозможно получить информацию о проекте"));
         }
 
-        // Метод, который получает VIK проекта
-        public List<v_GetVik> GetVik(string token, int ResoultID)
+        public List<Specifications> GetWarhouseKey(string token, string project)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Control GetProjectData(string token, string project)
         {
             // Если токен найден, то выполни метод
             if (Check(token))
-                return ProjectsLogic.GetVIK(ResoultID);
+                return ProjectsLogic.GetProjectData(project);
 
 
             // Иначе, выдай экзепшен
-            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о проекте"));
         }
 
         #endregion
@@ -167,6 +171,71 @@ namespace A100_Service.Services.ASTI
             return security.GetLifeDate(token);
         }
 
+        public List<Specifications> GetProjectData(string project)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
+        #region Секция VIK
+
+        // Метод, который получает VIK проекта
+        public List<v_GetVik> GetVik(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return VikLogic.GetVIK(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+        }
+
+        // Получение названий VIK
+        public List<VikElement> GetVikNames(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return VikLogic.GetVikNames();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+        }
+        
+        // Получение фотографий по айди Vik
+        public List<byte[]> GetVIKPhotoList(string token, int idVik)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Загрузка фотографии VIK на сервер
+        public byte[] DownLoadVIKPhoto(string token, int rid, int idVik)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Секция Клиенты
+
+        public List<Employee> GetEmployeesClients(string token)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ClientsLogic.GetEmployeesClients();
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+        }
+
+        public List<Specifications> GetClientSchemePermissions(string token, int UserID, int ResoultID)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

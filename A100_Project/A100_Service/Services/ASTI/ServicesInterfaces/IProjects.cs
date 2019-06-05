@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 namespace A100_Service.Services.ASTI.ServicesInterfaces
 {
 
+    /// <summary>
+    /// Интерфейс предоставляет поведение категории Projects
+    /// </summary>
+
     [ServiceContract]
     interface IProjects
     {
@@ -23,11 +27,11 @@ namespace A100_Service.Services.ASTI.ServicesInterfaces
         [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetWork?token={token}&id={WarhouseID}")]
         v_GetWork GetWork(string token, int WarhouseID);
 
-
-        // GET - метод, который получает VIK по ResoultID
+        // GET - метод, который получает названия и типы уровней риска
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetProjectVIK?token={token}&id={ResoultID}")]
-        List<v_GetVik> GetVik(string token, int ResoultID);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetProjectData?token={token}&project={project}")]
+        Control GetProjectData(string token, string project);
+
 
     }
 }
