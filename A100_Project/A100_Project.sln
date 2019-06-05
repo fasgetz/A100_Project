@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{61402E12
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests_A100Service", "UnitTests_A100Service\UnitTests_A100Service.csproj", "{3513BB25-34B7-46ED-B64D-13E1815B190F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionLibrary", "EncriptionLibrary\EncryptionLibrary.csproj", "{21DD548C-6C89-4D25-8917-FF7AAC2537AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptionLibrary", "EncriptionLibrary\EncryptionLibrary.csproj", "{21DD548C-6C89-4D25-8917-FF7AAC2537AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

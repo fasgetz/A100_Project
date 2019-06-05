@@ -16,7 +16,6 @@ namespace A100_Service.Services.UserService.Security
     public class Token
     {
 
-        [DataMember]
         public string UserID { get; set; } // Айди пользователя
 
         [DataMember]

@@ -205,8 +205,10 @@
     <Compile Include="DataBase\Repositories\EFGenericRepository.cs" />
     <Compile Include="DataBase\Repositories\IRepository.cs" />
     <Compile Include="Exceptions\Exception.cs" />
+    <Compile Include="Services\ASTI\BusinessLogic\ProjectsLogic.cs" />
     <Compile Include="Services\ASTI\IService_A100.cs" />
     <Compile Include="Services\ASTI\BusinessLogic\CityImplement.cs" />
+    <Compile Include="Services\ASTI\ServicesInterfaces\IProjects.cs" />
     <Compile Include="Services\ASTI\ServicesInterfaces\ITypeCity.cs" />
     <Compile Include="Services\ASTI\Service_A100.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

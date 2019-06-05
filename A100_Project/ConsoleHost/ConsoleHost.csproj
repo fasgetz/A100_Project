@@ -48,21 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Row.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\A100_Service\A100_Service.csproj">
       <Project>{f3c2cc31-db7a-4843-8b6e-a974554a5932}</Project>
       <Name>A100_Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EncriptionLibrary\EncryptionLibrary.csproj">
+      <Project>{21DD548C-6C89-4D25-8917-FF7AAC2537AF}</Project>
+      <Name>EncryptionLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

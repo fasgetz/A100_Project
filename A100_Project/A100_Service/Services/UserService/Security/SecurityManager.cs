@@ -1,8 +1,10 @@
 ﻿using A100_Service.DataBase.aspASTI;
 using A100_Service.DataBase.Repositories;
+using A100_Service.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -90,8 +92,19 @@ namespace A100_Service.Services.UserService.Security
 
         public Token GetTokenName(string TokenName)
         {
-            // Возвращаем токен пользователю, который ищем по логину
-            return ActiveToken(tokens.FirstOrDefault(i => i.token == TokenName));
+            // Ищем токен по логину
+            var token = ActiveToken(tokens.FirstOrDefault(i => i.token == TokenName));
+
+            // Если токен найден, то верни его
+            if (token != null)
+                return token;
+
+            // Если токен не найден, то выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Вам отказано в доступе"),
+                new FaultReason("Токен не найден"));
+
+            //// Возвращаем токен пользователю, который ищем по логину
+            //return ActiveToken(tokens.FirstOrDefault(i => i.token == TokenName));
         }
 
 

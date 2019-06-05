@@ -7,81 +7,51 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Security.Cryptography;
 using System.IO;
+using EncriptionLibrary;
 
 namespace ConsoleHost
 {
     class Program
     {
+        //public static byte[] DecodeUrlBase64(string s)
+        //{
+        //    s = s.Replace('-', '+').Replace('_', '/').PadRight(4 * ((s.Length + 3) / 4), '=');
+        //    return Convert.FromBase64String(s);
+        //}
 
-        //readonly string PasswordHash = "df^348eZ";
-        //readonly string SaltKey = "@l3#$kdZ";
-        //readonly string VIKey = "*d#kfFRkeWEoDpFe";
+
+        //readonly static string PasswordHash = "df^348eZ";
+        //readonly static string SaltKey = "@l3#$kdZ";
+        //readonly static string VIKey = "*d#kfFRkeWEoDpFe";
+
+        //private static string Decrypt(string encryptedText)
+        //{
+
+        //    string input = encryptedText;
+        //    byte[] buffer = Encoding.ASCII.GetBytes(input);
+        //    string base64 = Convert.ToBase64String(buffer); // SGVsbG8sIFdvcmxk
+
+
+        //    //byte[] cipherTextBytes = Convert.FromBase64String(encryptedText);
+        //    byte[] cipherTextBytes = DecodeUrlBase64(base64);
+
+
+        //    byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
+        //    var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };
+
+        //    var decryptor = symmetricKey.CreateDecryptor(keyBytes, Encoding.ASCII.GetBytes(VIKey));
+        //    var memoryStream = new MemoryStream(cipherTextBytes);
+        //    var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+        //    byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+
+        //    int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+        //    memoryStream.Close();
+        //    cryptoStream.Close();
+        //    return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount).TrimEnd("\0".ToCharArray());
+        //}
 
         static void Main(string[] args)
         {
-            //string PasswordHash = "df^348eZ";
-            //string SaltKey = "@l3#$kdZ";
-            //string VIKey = "*d#kfFRkeWEoDpFe";
-
-
-            //string password = "test";
-
-
-
-            //byte[] cipherTextBytes = Convert.FromBase64String(password);
-            //byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
-            //var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };
-
-            //var decryptor = symmetricKey.CreateDecryptor(keyBytes, Encoding.ASCII.GetBytes(VIKey));
-            //var memoryStream = new MemoryStream(cipherTextBytes);
-            //var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
-            //byte[] plainTextBytes = new byte[cipherTextBytes.Length];
-
-            //int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-            //memoryStream.Close();
-            //cryptoStream.Close();
-
-            //Service.ASTIWSSoapClient a = new Service.ASTIWSSoapClient();
-
-
-
-
-
-            //Console.WriteLine(a.GetEmpKey("test", "testtttt123S*"));
-
-
-
-
-
-
-            //// Объявляем список, типа Row
-            //List<Row> rowslist = new List<Row>()
-            //{
-            //    // Добавляем строки с разным текстом
-            //    new Row("Первая строка, в который какой-то текст"),
-            //    new Row("Вторая сторка"),
-            //    new Row("Первая-Третья строка, в который какой-то текст лежит"),
-            //    new Row("Строка"),
-            //    new Row("Первая строка, в который какой-то текст"),
-            //    new Row("Первая строка, в который какой-то текст"),
-            //    new Row("Символы"),
-            //    new Row("Текст"),
-            //    new Row("Другая строка аываыв"),
-            //    new Row("Мне уже лень придумывать, поэтому будет авыаффывпфывпждфывпжфыдвпждывпджыв"),
-            //    new Row("ЫЫыывдывадывдаыдважфывпдфаыжвдпфждывдывждфжыдвыждфвд"),
-            //};
-
-            //// Перебираем элементы в коллекции, которые отсортированы
-            //// в порядке возрастания по количеству символов в тексте
-            //foreach (var item in rowslist.OrderBy(i => i.text.Count()))
-            //{
-            //    Console.WriteLine($"Количество символов {item.text.Count()}. Текст {item.text}");
-            //}
-
-
-
-
-
             using (var host = new WebServiceHost(typeof(A100_Service.Services.ASTI.Service_A100)))
             {
 

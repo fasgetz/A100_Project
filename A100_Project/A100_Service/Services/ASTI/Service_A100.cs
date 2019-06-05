@@ -30,7 +30,7 @@ namespace A100_Service.Services.ASTI
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "Service_A100" в коде и файле конфигурации.
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class Service_A100 : IService_A100, ITypeCity, IUserService
+    public class Service_A100 : IService_A100, ITypeCity, IUserService, IProjects
     {
 
         #region Секция City
@@ -71,6 +71,44 @@ namespace A100_Service.Services.ASTI
 
         #endregion
 
+        #region Секция Projects
+
+
+        // Получаем список проектов пользователя
+        public List<v_GetProjects> GetUserProjects(string token)
+        {
+            // Если токен найден, то верни список проектов пользователю
+            return ProjectsLogic.GetUserProjects(security.GetTokenName(token).UserLogin);
+
+        }
+
+
+        // Метод, который получает информацию о проекте
+        public v_GetWork GetWork(string token, int WarhouseID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ProjectsLogic.GetWork(WarhouseID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о проекте"));
+        }
+
+        // Метод, который получает VIK проекта
+        public List<v_GetVik> GetVik(string token, int ResoultID)
+        {
+            // Если токен найден, то выполни метод
+            if (Check(token))
+                return ProjectsLogic.GetVIK(ResoultID);
+
+
+            // Иначе, выдай экзепшен
+            throw new FaultException<MyException>(new MyException("Невозможно получить информацию о VIK"));
+        }
+
+        #endregion
+
         #region Конструктор
 
         //// Делегат, который принимает токен и возвращает true, если метод можно выполнить
@@ -93,9 +131,8 @@ namespace A100_Service.Services.ASTI
             // Если токен найден, то разреши выполнение метода
             if (security.GetTokenName(token) != null)
                 return true;
-
-            throw new FaultException<MyException>(new MyException("Вам отказано в доступе"),
-                new FaultReason("Вам отказано в доступе"));
+            else
+                return false;
         }
 
 
@@ -111,19 +148,25 @@ namespace A100_Service.Services.ASTI
         {
             // Делаем запрос в базу данных
             // Если пользователь найден, то верни токен
-            if (new EFGenericRepository<AspNetUsers>(new aspASTI()).FindQueryEntity(i => i.Email == login && i.PasswordHash == password) != null)
-                return security.AddToken(login);
+            var token = security.AddToken(login);
+
+            // Если токен нашли, то возвращаем его
+            if (token != null)
+                return token;
+
 
 
             // Иначе выдай экзепшен
-            throw new FaultException<MyException>(new MyException("Невозможно получить города"));
+            throw new FaultException<MyException>(new MyException("Невозможно получить токен"), "Ошибка получения токена");
         }
+
 
         // Возвращаем дату жизни токена, если он найден
         public string GetLifeToken(string token)
         {
             return security.GetLifeDate(token);
         }
+
 
         #endregion
 
