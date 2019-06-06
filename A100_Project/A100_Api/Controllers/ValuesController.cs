@@ -12,24 +12,35 @@ namespace A100_Api.Controllers
     {
 
         [HttpGet]
-        [Route("get")]
-        public ActionResult Getss()
+        //[Route("get")]
+        public ActionResult Get()
         {
             dynamic kek = new System.Dynamic.ExpandoObject();
             kek.name = "Andrew";
             kek.age = 18;
 
 
-
             return Ok(kek);
         }
 
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [Route("~/api/AddTodo")]
+        [HttpPost]
+        public ActionResult test(int id)
         {
-            return new string[] { "value1", "value2" };
+            dynamic kek = new System.Dynamic.ExpandoObject();
+            kek.name = "Andrew";
+            kek.age = 18;
+
+
+            return Ok($"Был успешно добавлен id: {id}");
         }
+
+        // GET api/values
+        //[HttpGet]
+        //public ActionResult<IEnumerable<string>> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET api/values/5
         [HttpGet("{id}")]

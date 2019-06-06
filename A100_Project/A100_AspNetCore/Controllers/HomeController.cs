@@ -12,24 +12,6 @@ namespace A100_AspNetCore.Controllers
     {
         public IActionResult Index()
         {
-            var client = new Service.Service_A100Client();
-
-            ViewBag.cities = client.GetCityesAsync().Result;
-            
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

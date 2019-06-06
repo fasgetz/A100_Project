@@ -10,19 +10,6 @@ namespace A100_Web_Core.Controllers
 {
     public class HomeController : Controller
     {
-
-        [HttpGet]
-        public JsonResult Getss()
-        {
-            dynamic kek = new System.Dynamic.ExpandoObject();
-            kek.name = "Andrew";
-            kek.age = 18;
-
-
-
-            return Json(kek);
-        }
-
         public IActionResult Index()
         {
             return View();

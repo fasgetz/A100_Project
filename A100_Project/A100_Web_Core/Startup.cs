@@ -35,12 +35,15 @@ namespace A100_Web_Core
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            // добавление ApplicationDbContext для взаимодействия с базой данных учетных записей
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
+                options.UseSqlServer(Configuration.GetConnectionString("UsersDBConnection")));
+
+            // добавление сервисов Idenity
+            services.AddDefaultIdentity<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -60,7 +63,7 @@ namespace A100_Web_Core
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
