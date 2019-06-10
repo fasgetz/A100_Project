@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="API\Controllers\" />
+    <Folder Include="Models\A100_Models\DataBase\" />
   </ItemGroup>
 
 </Project>

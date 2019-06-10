@@ -39,12 +39,17 @@ namespace A100_AspNetCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            // Подключаем контекст базы данных пользователей
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("aspUsers")));
+
+            // Подключаем идентификацию пользователей по базе данных
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
 
+
+            // Подключаем базу данных моделей контекста А100
+            //services.adddb
 
             // JWT токен для авторизации
 
