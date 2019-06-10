@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace A100_AspNetCore.Controllers
 {
 
-    [Route("[controller]")]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
