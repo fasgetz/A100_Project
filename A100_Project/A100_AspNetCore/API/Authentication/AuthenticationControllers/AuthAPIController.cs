@@ -89,7 +89,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         // GET api/values
         [HttpGet]
         [Route("GetAdmin")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "administrator")]
         public string GetAdmin()
         {
             return "Поздравляю, админ!";

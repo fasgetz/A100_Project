@@ -67,7 +67,7 @@ namespace A100_AspNetCore.Services.API
                 return null;
 
             // Проходим авторизацию (Если пользователь найден)
-            var result = await _signInManager.PasswordSignInAsync(username, password, false, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
             // Если авторизация не прошла успешно, то верни null
             if (!result.Succeeded)
