@@ -17,7 +17,7 @@ namespace A100_AspNetCore.Services.API.Projects
             db = context;
         }
 
-        // GET - метод, который получает названия и типы уровней риска
+        // GET - метод, который получает ТЗ
         public async Task<Control> GetProjectData(string project)
         {
             return await db.Control.FirstOrDefaultAsync(i => i.ProjectNumber == project);

@@ -24,25 +24,25 @@ namespace A100_AspNetCore.API.Controllers
         }
 
 
-        // GET Метод, который получает проект
+        // Информация о проекте
         [HttpGet]
         [Route("GetWork")]
         public async Task<v_GetWork> GetWork([FromBody]v_GetWork work)
         {
-            return await service.GetWork(Convert.ToInt32(work.WarhouseID));
+            return await service.GetWork(work.WarhouseID);
         }
 
-        // GET Метод, который получает проект
+        // Список проектов пользователя
         [HttpGet]
         [Route("GetUserProjects")]
         public async Task<List<v_GetProjects>> GetUserProjects([FromBody]v_GetProjects projects)
         {
-            return await service.GetUserProjects(projects.UserName);
+            return await service.GetUserProjects(projects.ProjectNumber);
         }
 
-        // GET Метод, который получает проект
+        // GET - метод, который получает ТЗ
         [HttpGet]
-        [Route("GetWork")]
+        [Route("GetProjectData")]
         public async Task<Control> GetProjectData([FromBody]Control control)
         {
             return await service.GetProjectData(control.ProjectNumber);

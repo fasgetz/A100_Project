@@ -22,7 +22,8 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
 
 
 
-        // Талицы
+        // Таблицы
+        public virtual DbSet<ElementsOfType> ElementsOfTypes { get; set; }
         public virtual DbSet<BasicCheckList> BasicCheckList { get; set; }
         public virtual DbSet<BasicDamage> BasicDamage { get; set; }
         public virtual DbSet<BoltedJoint> BoltedJoint { get; set; }

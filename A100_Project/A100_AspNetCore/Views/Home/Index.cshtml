@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model  IEnumerable<A100_AspNetCore.Models.A100_Models.DataBase.City>
+@model  IEnumerable<A100_AspNetCore.Models.A100_Models.DataBase.ElementsOfType>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -13,6 +13,6 @@
     <tr><td>Айди</td><td>Город</td></tr>
     @foreach (var item in Model)
     {
-        <tr><td>@item.CityId</td><td>@item.CityName</td></tr>
+        <tr><td>@item.ElementKey</td><td>@item.OrentationIndex</td></tr>
     }
 </table>

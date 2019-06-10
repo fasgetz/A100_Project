@@ -9,7 +9,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase._Views
     {
         public int ControlID { get; set; }
 
-        public int? WarhouseID { get; set; }
+        public int WarhouseID { get; set; }
 
         public DateTime? ControlData { get; set; }
 
