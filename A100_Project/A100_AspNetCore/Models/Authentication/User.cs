@@ -10,9 +10,7 @@ namespace A100_AspNetCore.Models.Authentication
     public class User : IdentityUser
     {
 
-        public int Year { get; set; } // Возраст юзера
-
-        public string Role { get; set; } // Роль юзера
+        //public int Year { get; set; } // Возраст юзера
 
 
     }

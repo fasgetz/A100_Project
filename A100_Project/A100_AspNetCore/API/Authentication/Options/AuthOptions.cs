@@ -22,5 +22,16 @@ namespace A100_AspNetCore.API.Authentication.Options
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
         }
+
+
+        // Свой валидатор времени
+        public static bool CustomLifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+        {
+            if (expires != null)
+            {
+                return DateTime.UtcNow < expires;
+            }
+            return false;
+        }
     }
 }
