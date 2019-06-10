@@ -7,6 +7,7 @@ using A100_AspNetCore.Models.A100_Models.DataBase;
 using A100_AspNetCore.Models.API;
 using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.Services.API;
+using A100_AspNetCore.Services.API.CityService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,6 +93,8 @@ namespace A100_AspNetCore
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
+
+            services.AddScoped<ICityService, CityService>(); // Сервис городов
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

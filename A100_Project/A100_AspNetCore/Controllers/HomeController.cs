@@ -7,24 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 using A100_AspNetCore.Models;
 using A100_AspNetCore.Models.A100_Models.DataBase;
 using Microsoft.EntityFrameworkCore;
+using A100_AspNetCore.Services.API.CityService;
 
 namespace A100_AspNetCore.Controllers
 {
     public class HomeController : Controller
     {
 
-        private ASTIContext db;
+        ICityService service;
 
-
-        public HomeController(ASTIContext context)
+        public HomeController(ICityService service)
         {
-            db = context;
+            this.service = service;
         }
 
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.City.ToListAsync());
+            return View(await service.GetAllCityes());
         }
 
         public IActionResult Privacy()
