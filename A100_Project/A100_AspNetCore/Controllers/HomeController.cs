@@ -5,14 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using A100_AspNetCore.Models;
+using A100_AspNetCore.Models.A100_Models.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace A100_AspNetCore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+
+        private ASTIContext db;
+
+
+        public HomeController(ASTIContext context)
         {
-            return View();
+            db = context;
+        }
+
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await db.City.ToListAsync());
         }
 
         public IActionResult Privacy()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using A100_AspNetCore.API.Authentication.Options;
+using A100_AspNetCore.Models.A100_Models.DataBase;
 using A100_AspNetCore.Models.API;
 using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.Services.API;
@@ -49,7 +50,9 @@ namespace A100_AspNetCore
 
 
             // Подключаем базу данных моделей контекста А100
-            //services.adddb
+            // Подключаем контекст базы данных пользователей
+            services.AddDbContext<ASTIContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ASTI_db")));
 
             // JWT токен для авторизации
 
