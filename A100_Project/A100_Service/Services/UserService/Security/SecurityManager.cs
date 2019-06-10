@@ -99,9 +99,6 @@ namespace A100_Service.Services.UserService.Security
             // Если токен не найден, то выдай экзепшен
             throw new FaultException<MyException>(new MyException("Вам отказано в доступе"),
                 new FaultReason("Токен не найден"));
-
-            //// Возвращаем токен пользователю, который ищем по логину
-            //return ActiveToken(tokens.FirstOrDefault(i => i.token == TokenName));
         }
 
 

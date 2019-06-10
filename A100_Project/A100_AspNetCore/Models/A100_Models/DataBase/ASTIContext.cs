@@ -1,4 +1,5 @@
 ﻿using System;
+using A100_AspNetCore.Models.A100_Models.DataBase._Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -15,6 +16,13 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         {
         }
 
+        // Представления
+        public virtual DbQuery<v_GetWork> v_GetWork { get; set; }
+        public virtual DbQuery<v_GetProjects> v_GetProjects { get; set; }
+
+
+
+        // Талицы
         public virtual DbSet<BasicCheckList> BasicCheckList { get; set; }
         public virtual DbSet<BasicDamage> BasicDamage { get; set; }
         public virtual DbSet<BoltedJoint> BoltedJoint { get; set; }

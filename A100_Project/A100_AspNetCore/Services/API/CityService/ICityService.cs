@@ -19,7 +19,7 @@ namespace A100_AspNetCore.Services.API.CityService
 
 
         // POST - метод, который добавляет город
-        Task<bool> AddCity(string name);
+        Task<City> AddCity(string name);
 
 
     }

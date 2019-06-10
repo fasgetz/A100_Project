@@ -19,23 +19,22 @@ namespace A100_AspNetCore.Services.API.CityService
 
 
         // Метод, который добавляет город
-        public async Task<bool> AddCity(string name)
+        public async Task<City> AddCity(string name)
         {
             return await Task.Run(() =>
             {
                 try
                 {
-                    db.City.AddAsync(new City { CityName = name });
+                    City city = new City { CityName = name };
+                    db.City.AddAsync(city);
 
                     db.SaveChangesAsync();
-                    return true;
+                    return city;
                 }
                 catch (Exception)
                 {
-
+                    return null;
                 }
-
-                return false;
             });
         }
 
