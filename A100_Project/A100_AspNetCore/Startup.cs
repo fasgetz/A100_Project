@@ -11,6 +11,7 @@ using A100_AspNetCore.Services.API.CityService;
 using A100_AspNetCore.Services.API.EmployeesService;
 using A100_AspNetCore.Services.API.Projects;
 using A100_AspNetCore.Services.API.SchemeService;
+using A100_AspNetCore.Services.API.SpecificationsService;
 using A100_AspNetCore.Services.API.VikService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -102,6 +103,7 @@ namespace A100_AspNetCore
             services.AddScoped<IEmployeeService, EmployeeService>(); // Сервис клиентов
             services.AddScoped<ISchemeService, SchemeService>(); // Сервис схемы (карта)
             services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
+            services.AddScoped<ISpecificationsService, SpecificationsService>(); // Сервис спецификаций
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

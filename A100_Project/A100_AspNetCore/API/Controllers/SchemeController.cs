@@ -25,10 +25,10 @@ namespace A100_AspNetCore.API.Controllers
 
         #region Секция методов
 
-        // GET Метод, который получает весь список городов
+        // GET Метод, который получает весь список элементов
         [HttpGet]
         [Route("GetDictionaryElement")]
-        public async Task<List<Element>> DictionaryElement()
+        public async Task<List<Element>> GetDictionaryElement()
         {
             return await service.DictionaryElement();
         }

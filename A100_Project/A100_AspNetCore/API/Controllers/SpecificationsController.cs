@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace A100_AspNetCore.API.Controllers
 {
+
     [Route("api/[Controller]")]
     [Authorize]
     [ApiController]
