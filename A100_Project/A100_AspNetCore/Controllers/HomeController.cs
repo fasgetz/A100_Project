@@ -24,8 +24,7 @@ namespace A100_AspNetCore.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await new ASTIContext().ElementsOfTypes.ToListAsync());
-            //return View(await service.GetAllCityes());
+            return View(await new ASTIContext().ElementsOfType.ToListAsync());
         }
 
         public IActionResult Privacy()

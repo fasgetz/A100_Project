@@ -22,6 +22,6 @@ namespace A100_AspNetCore.Services.API.Projects
         Task<v_GetWork> GetWork(int WarhouseID);
 
         // GET - метод, который получает названия и типы уровней риска
-        Task<Control> GetProjectData(string project);
+        Task<Control> GetProjectData(string projectname);
     }
 }

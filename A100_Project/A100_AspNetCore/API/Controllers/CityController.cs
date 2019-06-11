@@ -59,9 +59,11 @@ namespace A100_AspNetCore.API.Controllers
         [Authorize(Roles = "administrator")] // Роли для метода
         [Route("AddCity")]
         public async Task<City> AddCity([FromBody]City city)
-        {            
+        {
             return await service.AddCity(city.CityName);
         }
+
+
         #endregion
     }
 }

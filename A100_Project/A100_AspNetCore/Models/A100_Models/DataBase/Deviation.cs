@@ -12,7 +12,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public int? DeviationLocationId { get; set; }
         public int? PlateCount { get; set; }
         public int? DeviationPlateLocationId { get; set; }
-        public int? ResoultId { get; set; }
+        public int ResoultId { get; set; }
         public int? EditValue { get; set; }
         public decimal? MX { get; set; }
         public decimal? MY { get; set; }

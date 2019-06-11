@@ -37,7 +37,7 @@ namespace A100_AspNetCore.API.Controllers
         [Route("GetUserProjects")]
         public async Task<List<v_GetProjects>> GetUserProjects([FromBody]v_GetProjects projects)
         {
-            return await service.GetUserProjects(projects.ProjectNumber);
+            return await service.GetUserProjects(projects.UserName);
         }
 
         // GET - метод, который получает ТЗ
@@ -47,5 +47,7 @@ namespace A100_AspNetCore.API.Controllers
         {
             return await service.GetProjectData(control.ProjectNumber);
         }
+
+
     }
 }

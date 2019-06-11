@@ -26,7 +26,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public int? TransformRow { get; set; }
         public int? EmployeeId { get; set; }
         public DateTime? UpdateTime { get; set; }
-        public int? ResoultId { get; set; }
+        public int ResoultId { get; set; }
 
         public virtual StillageType StillageType { get; set; }
         public virtual Warhouse Warhouse { get; set; }

@@ -8,7 +8,10 @@ using A100_AspNetCore.Models.API;
 using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.Services.API;
 using A100_AspNetCore.Services.API.CityService;
+using A100_AspNetCore.Services.API.EmployeesService;
 using A100_AspNetCore.Services.API.Projects;
+using A100_AspNetCore.Services.API.SchemeService;
+using A100_AspNetCore.Services.API.VikService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,12 +95,13 @@ namespace A100_AspNetCore
             // Конец JWT
 
 
-            // configure DI for application services
+            // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
-
             services.AddScoped<ICityService, CityService>(); // Сервис городов
-
             services.AddScoped<IProjectsService, ProjectsService>(); // Сервис проектов
+            services.AddScoped<IEmployeeService, EmployeeService>(); // Сервис клиентов
+            services.AddScoped<ISchemeService, SchemeService>(); // Сервис схемы (карта)
+            services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -4,19 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using A100_AspNetCore.Models.A100_Models.DataBase;
 using A100_AspNetCore.Models.Repositories;
+using A100_AspNetCore.Services.API._DBService;
 using Microsoft.EntityFrameworkCore;
 
 namespace A100_AspNetCore.Services.API.CityService
 {
     public class CityService : ICityService
     {
-        private ASTIContext db; // Контекст базы данных
-
-        public CityService(ASTIContext context)
-        {
-            db = context;
-        }
-
 
         // Метод, который добавляет город
         public async Task<City> AddCity(string name)
@@ -26,9 +20,9 @@ namespace A100_AspNetCore.Services.API.CityService
                 try
                 {
                     City city = new City { CityName = name };
-                    db.City.AddAsync(city);
+                    MyDB.db.City.AddAsync(city);
 
-                    db.SaveChangesAsync();
+                    MyDB.db.SaveChangesAsync();
                     return city;
                 }
                 catch (Exception)
@@ -44,7 +38,8 @@ namespace A100_AspNetCore.Services.API.CityService
         {
             try
             {
-                return await db.City.ToListAsync();
+                return await MyDB.db.City.ToListAsync();
+                //return await db.City.ToListAsync();
             }
             catch (Exception)
             {
@@ -55,8 +50,8 @@ namespace A100_AspNetCore.Services.API.CityService
         public async Task<City> GetCityId(int id)
         {
             try
-            {
-                return await db.City.FirstOrDefaultAsync(i => i.CityId == id);
+            {                
+                return await MyDB.db.City.FirstOrDefaultAsync(i => i.CityId == id);
             }
             catch (Exception)
             {
@@ -68,7 +63,7 @@ namespace A100_AspNetCore.Services.API.CityService
         {
             try
             {
-                return await db.City.FirstOrDefaultAsync(i => i.CityName == name);
+                return await MyDB.db.City.FirstOrDefaultAsync(i => i.CityName == name);
             }
             catch (Exception)
             {

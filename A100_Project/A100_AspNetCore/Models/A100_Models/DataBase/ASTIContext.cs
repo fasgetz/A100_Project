@@ -16,14 +16,16 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         {
         }
 
+
         // Представления
+        public virtual DbQuery<v_GetVik> v_GetVik { get; set; }
         public virtual DbQuery<v_GetWork> v_GetWork { get; set; }
         public virtual DbQuery<v_GetProjects> v_GetProjects { get; set; }
-
+        public virtual DbQuery<v_GetSpecificationsElement> v_GetSpecificationsElement { get; set; }
+        public virtual DbQuery<v_GetMap> v_GetMap { get; set; }
 
 
         // Таблицы
-        public virtual DbSet<ElementsOfType> ElementsOfTypes { get; set; }
         public virtual DbSet<BasicCheckList> BasicCheckList { get; set; }
         public virtual DbSet<BasicDamage> BasicDamage { get; set; }
         public virtual DbSet<BoltedJoint> BoltedJoint { get; set; }
@@ -34,6 +36,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public virtual DbSet<CheckListTile> CheckListTile { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<ClientLicense> ClientLicense { get; set; }
+        public virtual DbSet<ClientPermissions> ClientPermissions { get; set; }
         public virtual DbSet<ClientSchemePermissions> ClientSchemePermissions { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Conclusion> Conclusion { get; set; }
@@ -51,6 +54,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public virtual DbSet<DeviationPlateLocation> DeviationPlateLocation { get; set; }
         public virtual DbSet<Document> Document { get; set; }
         public virtual DbSet<Element> Element { get; set; }
+        public virtual DbSet<ElementsOfType> ElementsOfType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<EmployeeConnection> EmployeeConnection { get; set; }
         public virtual DbSet<ExpertCommission> ExpertCommission { get; set; }
@@ -82,9 +86,6 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public virtual DbSet<Vik> Vik { get; set; }
         public virtual DbSet<VikElement> VikElement { get; set; }
         public virtual DbSet<Warhouse> Warhouse { get; set; }
-
-        // Unable to generate entity type for table 'dbo.ElementsOfType'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.ClientPermissions'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -290,6 +291,21 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
                     .HasForeignKey(d => d.LicenseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ClientLicense_Licenses");
+            });
+
+            modelBuilder.Entity<ClientPermissions>(entity =>
+            {
+                entity.HasKey(e => e.ClientPermissionId)
+                    .HasName("PK_ClientPermissions_1");
+
+                entity.Property(e => e.ClientPermissionId).HasColumnName("ClientPermissionID");
+
+                entity.Property(e => e.CreatingPto).HasColumnName("CreatingPTO");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnName("UserID")
+                    .HasMaxLength(128);
             });
 
             modelBuilder.Entity<ClientSchemePermissions>(entity =>
@@ -624,6 +640,13 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
                 entity.Property(e => e.Format)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ElementsOfType>(entity =>
+            {
+                entity.HasKey(e => e.IdEot);
+
+                entity.Property(e => e.IdEot).HasColumnName("IdEOT");
             });
 
             modelBuilder.Entity<Employee>(entity =>
