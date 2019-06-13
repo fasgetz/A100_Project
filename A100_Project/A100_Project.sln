@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptionLibrary", "Encrip
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "A100_AspNetCore", "A100_AspNetCore\A100_AspNetCore.csproj", "{75F442DC-7A89-4D2C-AFD9-DEDF6ECD7E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A100_AspNetCore_UnitTests", "A100_AspNetCore_UnitTests\A100_AspNetCore_UnitTests.csproj", "{F813A7D1-96A5-431F-BCF8-A7AE11C6F8FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "A100_AspNetCore_UnitTests", "A100_AspNetCore_UnitTests\A100_AspNetCore_UnitTests.csproj", "{F813A7D1-96A5-431F-BCF8-A7AE11C6F8FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

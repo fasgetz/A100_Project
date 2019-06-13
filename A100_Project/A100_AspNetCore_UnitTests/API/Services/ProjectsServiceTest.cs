@@ -7,7 +7,7 @@ using Xunit;
 namespace A100_AspNetCore_UnitTests.API.Services
 {
     /// <summary>
-    /// Класс тесторует сервис проектов
+    /// Класс тестирует сервис проектов
     /// </summary>
 
 

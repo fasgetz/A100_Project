@@ -59,11 +59,16 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
                 ExperesDate = DateTime.Now.AddDays(1)
             };
 
+            //HttpContext.Session.SetString(SessionKeyName, "Rick");
+            //HttpContext.Session.SetInt32(SessionKeyYearsMember, 3);
             // сериализация ответа
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
+        //const string SessionKeyName = "_Name";
+        //const string SessionKeyYearsMember = "_YearsMember";
+        //const string SessionKeyDate = "_Date";
 
         // Тестовые методы ---------------------------
 

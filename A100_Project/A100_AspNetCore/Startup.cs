@@ -24,6 +24,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace A100_AspNetCore
 {
@@ -50,10 +51,11 @@ namespace A100_AspNetCore
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("aspUsers")));
 
+
+            // Конец JWT
             // Подключаем идентификацию пользователей по базе данных
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
-
 
             // Подключаем базу данных моделей контекста А100
             // Подключаем контекст базы данных пользователей
@@ -61,6 +63,7 @@ namespace A100_AspNetCore
                 options.UseSqlServer(Configuration.GetConnectionString("ASTI_db")));
 
             // JWT токен для авторизации
+
 
             services.AddAuthentication(x =>
             {
@@ -93,7 +96,6 @@ namespace A100_AspNetCore
                 };
             });
 
-            // Конец JWT
 
 
             // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
@@ -104,6 +106,13 @@ namespace A100_AspNetCore
             services.AddScoped<ISchemeService, SchemeService>(); // Сервис схемы (карта)
             services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
             services.AddScoped<ISpecificationsService, SpecificationsService>(); // Сервис спецификаций
+
+            //// Сессии
+            //services.AddDistributedMemoryCache();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromSeconds(60);
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -122,6 +131,25 @@ namespace A100_AspNetCore
                 app.UseHsts();
             }
 
+
+            //// Включаем сессии
+            //app.UseSession();
+            //app.Run(async (context) =>
+            //{
+            //    if (context.Session.Keys.Contains("person"))
+            //    {
+            //        Person person = context.Session.Get<Person>("person");
+                    
+            //        //await context.Response.WriteAsync($"Hello {person.Name}!");
+            //    }
+            //    else
+            //    {
+            //        Person person = new Person { Name = "Tom", Age = 22 };
+            //        context.Session.Set<Person>("person", person);
+            //        await context.Response.WriteAsync("Hello World!");
+            //    }
+            //});
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -134,5 +162,31 @@ namespace A100_AspNetCore
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+    }
+
+
+
+    public static class SessionExtensions
+    {
+        public static bool? GetBoolean(this ISession session, string key)
+        {
+            var data = session.Get(key);
+            if (data == null)
+            {
+                return null;
+            }
+            return BitConverter.ToBoolean(data, 0);
+        }
+
+        public static void SetBoolean(this ISession session, string key, bool value)
+        {
+            session.Set(key, BitConverter.GetBytes(value));
+        }
+    }
+
+    class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
     }
 }

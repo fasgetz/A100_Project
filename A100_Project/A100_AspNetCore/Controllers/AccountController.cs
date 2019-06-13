@@ -1,11 +1,13 @@
 ﻿using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace A100_AspNetCore.Controllers
 {
@@ -49,6 +51,8 @@ namespace A100_AspNetCore.Controllers
             return View(model);
         }
 
+
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
@@ -59,6 +63,7 @@ namespace A100_AspNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var result =
