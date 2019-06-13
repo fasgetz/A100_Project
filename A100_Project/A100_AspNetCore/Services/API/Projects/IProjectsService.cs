@@ -16,7 +16,7 @@ namespace A100_AspNetCore.Services.API.Projects
     public interface IProjectsService
     {
         //// GET - метод, который возвращает список проектов пользователя
-        Task<List<v_GetProjects>> GetUserProjects(string token);
+        Task<List<v_GetProjects>> GetUserProjects(string username);
 
         // GET - метод, который получает информацию о проекте
         Task<v_GetWork> GetWork(int WarhouseID);

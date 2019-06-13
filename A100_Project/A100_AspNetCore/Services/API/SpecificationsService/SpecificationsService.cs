@@ -41,7 +41,7 @@ namespace A100_AspNetCore.Services.API.SpecificationsService
             return MyDB.db.Specifications.Where(i => i.ResoultId == ResoultID).ToListAsync();
         }
 
-        // GET - метод, который получает названия и типы уровней риска
+        // GET - метод, который получает роли
         public Task<List<ClientPermissions>> GetUserRoles()
         {
             return MyDB.db.ClientPermissions.ToListAsync();

@@ -35,7 +35,7 @@ namespace A100_AspNetCore.API.Controllers
 
         [HttpGet]
         [Route("GetClientSchemePermissions")]
-        // GET - метод, который получает зоны ответственности клиентов на складе
+        // GET - Метод, который получает зоны ответственности клиентов на складе
         public async Task<List<ClientSchemePermissions>> GetClientSchemePermissions([FromBody]ClientSchemePermissions scheme)
         {
             return await service.GetClientSchemePermissions(scheme.UserId, scheme.ResoultId);
