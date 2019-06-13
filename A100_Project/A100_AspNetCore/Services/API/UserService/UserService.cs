@@ -60,7 +60,7 @@ namespace A100_AspNetCore.Services.API
         {
 
             // Ищем пользователя по email
-            User user = await _userManager.FindByEmailAsync(username);
+            User user = await _userManager.FindByEmailAsync(username);            
 
             // Если пользователь не найден, верни ошибку о том, что такого юзера нет
             if (user == null)
