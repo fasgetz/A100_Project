@@ -1,11 +1,13 @@
 ﻿using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
@@ -51,7 +53,12 @@ namespace A100_AspNetCore.Controllers
             return View(model);
         }
 
-
+        [HttpGet]
+        [Authorize(Roles = "user")]
+        public string set()
+        {
+            return "method for role";
+        }
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
@@ -66,10 +73,26 @@ namespace A100_AspNetCore.Controllers
 
             if (ModelState.IsValid)
             {
+                // Находим юзера по емейлу
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                // Если пользователя нашли, то сбрось все аутентификации ему
+                if (user != null)
+                {
+                    // Если true, то сбросились все куки
+                    var removed = await UnLoginUser(user.Email);
+                }
+
+
+
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+
                 if (result.Succeeded)
                 {
+                    
+
                     // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -86,6 +109,27 @@ namespace A100_AspNetCore.Controllers
                 }
             }
             return View(model);
+        }
+
+
+        private async Task<bool> UnLoginUser(string name)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(name); // Находим юзера по емайлу
+
+
+                //await _signInManager.RefreshSignInAsync(user);
+
+                // Обновляем секретный ключ
+                await _userManager.UpdateSecurityStampAsync(user);
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         [HttpPost]

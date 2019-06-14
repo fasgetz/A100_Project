@@ -57,11 +57,16 @@ namespace A100_AspNetCore
                 options.UseSqlServer(Configuration.GetConnectionString("ASTI_db")));
 
 
+            // Конфигурация куки файлов
+            //services.ConfigureApplicationCookie(opts => {
+            //    opts.Cookie.Name = "My.Cookie.User";
+            //});
 
-
-
-
-
+            // Валидация защиты (Сброс куки тут)
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromSeconds(1);
+            });
 
             // JWT токен для авторизации
 
@@ -141,7 +146,7 @@ namespace A100_AspNetCore
             }
 
 
-            // Включаем сессии
+            // Включаем сессии            
             app.UseSession();
             //app.Run(async (context) =>
             //{
