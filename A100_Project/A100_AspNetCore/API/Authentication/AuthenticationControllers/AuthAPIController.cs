@@ -1,5 +1,6 @@
 ﻿using A100_AspNetCore.Models.API;
 using A100_AspNetCore.Services.API;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
 
     [Route("api/auth")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class AuthAPIController : ControllerBase
     {
@@ -86,12 +87,13 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [Route("get")]
         public string Get()
         {
+            
 
-            //var name = _httpContextAcessor.HttpContext.Session.GetString(SessionKeyName);
-            //var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
+            var name = _httpContextAcessor.HttpContext.Session.GetString(SessionKeyName);
+            var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
 
-            //return $"Name: \"{name}\",  Membership years: \"{yearsMember}\"";
-            return "tested!";
+            return $"Name: {name},\n  Membership years: {yearsMember}\nИИ {_httpContextAcessor.HttpContext.User.Identity.Name}";
+            //return "tested!";
 
             //return new string[] { "value1", "value2" };
         }

@@ -104,7 +104,9 @@ namespace A100_AspNetCore
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
 
+
             // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Сервис контекста            
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
             services.AddScoped<ICityService, CityService>(); // Сервис городов
             services.AddScoped<IProjectsService, ProjectsService>(); // Сервис проектов
@@ -112,13 +114,13 @@ namespace A100_AspNetCore
             services.AddScoped<ISchemeService, SchemeService>(); // Сервис схемы (карта)
             services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
             services.AddScoped<ISpecificationsService, SpecificationsService>(); // Сервис спецификаций
-
+            services.AddHttpContextAccessor();
             //// Сессии
-            //services.AddDistributedMemoryCache();
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
-            //});
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+            });
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -140,7 +142,7 @@ namespace A100_AspNetCore
 
 
             // Включаем сессии
-            //app.UseSession();
+            app.UseSession();
             //app.Run(async (context) =>
             //{
             //    if (context.Session.Keys.Contains("person"))
