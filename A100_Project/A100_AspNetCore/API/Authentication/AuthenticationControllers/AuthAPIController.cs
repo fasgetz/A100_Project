@@ -24,10 +24,11 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
     public class AuthAPIController : ControllerBase
     {
         private IUserService _userService;
-
-        public AuthAPIController(IUserService userService)
+        private readonly IHttpContextAccessor _httpContextAcessor;
+        public AuthAPIController(IUserService userService, IHttpContextAccessor tp)
         {
             _userService = userService;
+            _httpContextAcessor = tp;
         }
 
 
@@ -38,6 +39,10 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [AllowAnonymous]
         public async Task Token([FromBody]AuthModel param)
         {
+            //// Устанавливаем сессию
+            //HttpContext.Session.SetString(SessionKeyName, "GEEEETETET");
+            //HttpContext.Session.SetInt32(SessionKeyYearsMember, 3324);
+
             var username = param.login;
             var password = param.password;
 
@@ -59,27 +64,36 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
                 ExperesDate = DateTime.Now.AddDays(1)
             };
 
-            //HttpContext.Session.SetString(SessionKeyName, "Rick");
-            //HttpContext.Session.SetInt32(SessionKeyYearsMember, 3);
+
+
+
+
             // сериализация ответа
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        //const string SessionKeyName = "_Name";
-        //const string SessionKeyYearsMember = "_YearsMember";
-        //const string SessionKeyDate = "_Date";
+        const string SessionKeyName = "_Name";
+        const string SessionKeyYearsMember = "_YearsMember";
+        const string SessionKeyDate = "_Date";
 
         // Тестовые методы ---------------------------
 
 
         // GET api/values
         [HttpGet]
+        [AllowAnonymous]
         [Route("get")]
-        [Authorize]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+
+            //var name = _httpContextAcessor.HttpContext.Session.GetString(SessionKeyName);
+            //var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
+
+            //return $"Name: \"{name}\",  Membership years: \"{yearsMember}\"";
+            return "tested!";
+
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/values

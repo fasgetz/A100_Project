@@ -51,26 +51,29 @@ namespace A100_AspNetCore
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("aspUsers")));
 
-
-            // Конец JWT
-            // Подключаем идентификацию пользователей по базе данных
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();
-
             // Подключаем базу данных моделей контекста А100
             // Подключаем контекст базы данных пользователей
             services.AddDbContext<ASTIContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ASTI_db")));
 
+
+
+
+
+
+
+
             // JWT токен для авторизации
 
 
-            services.AddAuthentication(x =>
-            {
+            services
+                .AddAuthentication(x =>
+            {                
+                x.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+                .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
@@ -95,8 +98,11 @@ namespace A100_AspNetCore
                     ValidateIssuerSigningKey = true,
                 };
             });
+            // Конец JWT
 
-
+            // Подключаем идентификацию пользователей по базе данных
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();
 
             // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
@@ -111,8 +117,9 @@ namespace A100_AspNetCore
             //services.AddDistributedMemoryCache();
             //services.AddSession(options =>
             //{
-            //    options.IdleTimeout = TimeSpan.FromSeconds(60);
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
             //});
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -132,14 +139,14 @@ namespace A100_AspNetCore
             }
 
 
-            //// Включаем сессии
+            // Включаем сессии
             //app.UseSession();
             //app.Run(async (context) =>
             //{
             //    if (context.Session.Keys.Contains("person"))
             //    {
             //        Person person = context.Session.Get<Person>("person");
-                    
+
             //        //await context.Response.WriteAsync($"Hello {person.Name}!");
             //    }
             //    else

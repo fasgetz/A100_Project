@@ -16,30 +16,29 @@ namespace A100_AspNetCore.Controllers
     {
 
         ICityService service;
+        private readonly IHttpContextAccessor _httpContextAcessor;
 
-        public HomeController(ICityService service)
+        public HomeController(ICityService service, IHttpContextAccessor tp)
         {
             this.service = service;
+            _httpContextAcessor = tp;
         }
 
         const string SessionKeyName = "_Name";
         const string SessionKeyYearsMember = "_YearsMember";
         const string SessionKeyDate = "_Date";
 
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    //var name = HttpContext.Session.GetString(SessionKeyName);
-        //    //var yearsMember = HttpContext.Session.GetInt32(SessionKeyYearsMember);
+        [HttpGet]
+        public string Get()
+        {
+            var name = HttpContext.Session.GetString(SessionKeyName);
+            var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
 
-        //    return Content($"Name: \"{name}\",  Membership years: \"{yearsMember}\"");
-        //}
+            return $"Name: \"{name}\",  Membership years: \"{yearsMember}\"";
+        }
 
         public async Task<IActionResult> Index()
         {
-            //HttpContext.Session.SetString(SessionKeyName, "Rick");
-            //HttpContext.Session.SetInt32(SessionKeyYearsMember, 3);
-
             return View(await new ASTIContext().ElementsOfType.ToListAsync());
         }
 
