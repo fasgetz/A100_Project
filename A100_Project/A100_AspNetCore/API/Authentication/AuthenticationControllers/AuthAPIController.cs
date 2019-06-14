@@ -40,9 +40,6 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [AllowAnonymous]
         public async Task Token([FromBody]AuthModel param)
         {
-            //// Устанавливаем сессию
-            //HttpContext.Session.SetString(SessionKeyName, "GEEEETETET");
-            //HttpContext.Session.SetInt32(SessionKeyYearsMember, 3324);
 
             var username = param.login;
             var password = param.password;
@@ -74,9 +71,6 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        const string SessionKeyName = "_Name";
-        const string SessionKeyYearsMember = "_YearsMember";
-        const string SessionKeyDate = "_Date";
 
         // Тестовые методы ---------------------------
 
@@ -87,12 +81,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [Route("get")]
         public string Get()
         {
-            
-
-            var name = _httpContextAcessor.HttpContext.Session.GetString(SessionKeyName);
-            var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
-
-            return $"Name: {name},\n  Membership years: {yearsMember}\nИИ {_httpContextAcessor.HttpContext.User.Identity.Name}";
+            return "Гет метод что-то возвращает";
             //return "tested!";
 
             //return new string[] { "value1", "value2" };

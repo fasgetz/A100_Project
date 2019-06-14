@@ -13,6 +13,7 @@ using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace A100_AspNetCore.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;

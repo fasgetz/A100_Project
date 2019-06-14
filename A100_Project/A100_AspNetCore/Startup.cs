@@ -120,7 +120,8 @@ namespace A100_AspNetCore
             services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
             services.AddScoped<ISpecificationsService, SpecificationsService>(); // Сервис спецификаций
             services.AddHttpContextAccessor();
-            //// Сессии
+
+            // Сессии
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {

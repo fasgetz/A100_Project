@@ -19,15 +19,13 @@ namespace A100_AspNetCore.Services.API
 
     public class UserService : IUserService
     {
-        private readonly IHttpContextAccessor _httpContextAcessor;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor tp)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _httpContextAcessor = tp;
         }   
 
 
@@ -53,19 +51,11 @@ namespace A100_AspNetCore.Services.API
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
 
-            // Устанавливаем сессию
-            _httpContextAcessor.HttpContext.Session.SetString(SessionKeyName, "tests");
-            _httpContextAcessor.HttpContext.Session.SetInt32(SessionKeyYearsMember, 3324);
-
 
             // Возвращаем токен
             return encodedJwt;
         }
 
-        // Ключи сессии
-        const string SessionKeyName = "_Name";
-        const string SessionKeyYearsMember = "_YearsMember";
-        const string SessionKeyDate = "_Date";
 
         // Делаем привязку токена, если пользователь найден
         private async Task<ClaimsIdentity> GetIdentity(string username, string password)
