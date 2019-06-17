@@ -80,7 +80,7 @@ namespace A100_AspNetCore
             })
                 .AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false;
+                options.RequireHttpsMetadata = false;                
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -109,7 +109,7 @@ namespace A100_AspNetCore
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
 
-
+            services.AddSingleton<CounterMiddleWare>();
             // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Сервис контекста            
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
@@ -146,24 +146,18 @@ namespace A100_AspNetCore
                 app.UseHsts();
             }
 
+            
+
+
+
+
+
+
+
 
             // Включаем сессии            
             app.UseSession();
-            //app.Run(async (context) =>
-            //{
-            //    if (context.Session.Keys.Contains("person"))
-            //    {
-            //        Person person = context.Session.Get<Person>("person");
 
-            //        //await context.Response.WriteAsync($"Hello {person.Name}!");
-            //    }
-            //    else
-            //    {
-            //        Person person = new Person { Name = "Tom", Age = 22 };
-            //        context.Session.Set<Person>("person", person);
-            //        await context.Response.WriteAsync("Hello World!");
-            //    }
-            //});
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

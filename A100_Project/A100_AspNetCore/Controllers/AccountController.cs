@@ -1,4 +1,5 @@
 ﻿using A100_AspNetCore.Models.Authentication;
+using A100_AspNetCore.Services.API;
 using A100_AspNetCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,13 @@ namespace A100_AspNetCore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly CounterMiddleWare md;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, CounterMiddleWare md)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.md = md;
         }
         [HttpGet]
         public IActionResult Register()
@@ -55,10 +58,11 @@ namespace A100_AspNetCore.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "user")]
+        //[Authorize(Roles = "user")]
+        [AllowAnonymous]
         public string set()
         {
-            return "method for role";
+            return md.GetValue.ToString();
         }
 
         [HttpGet]
@@ -77,37 +81,62 @@ namespace A100_AspNetCore.Controllers
                 // Находим юзера по емейлу
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
+
+
                 // Если пользователя нашли, то сбрось все аутентификации ему
                 if (user != null)
                 {
                     // Если true, то сбросились все куки
                     var removed = await UnLoginUser(user.Email);
-                }
 
+                    // Авторизазируемся
+                    var test = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
-
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-
-
-                if (result.Succeeded)
-                {
-                    
-
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    // Если авторизация успешна
+                    if (test.Succeeded)
                     {
-                        return Redirect(model.ReturnUrl);
+                        // проверяем, принадлежит ли URL приложению
+                        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                        {
+                            return Redirect(model.ReturnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                     }
                 }
                 else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
+                    ModelState.AddModelError("", "Пользователь не найден!!!");
+
+
+
+                //var result =
+                //    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+
+                //if (result.Succeeded)
+                //{
+
+
+                //    // проверяем, принадлежит ли URL приложению
+                //    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                //    {
+                //        return Redirect(model.ReturnUrl);
+                //    }
+                //    else
+                //    {
+                //        return RedirectToAction("Index", "Home");
+                //    }
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                //}
             }
             return View(model);
         }

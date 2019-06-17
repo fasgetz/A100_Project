@@ -26,10 +26,13 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
     {
         private IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAcessor;
-        public AuthAPIController(IUserService userService, IHttpContextAccessor tp)
+        private readonly CounterMiddleWare md;
+
+        public AuthAPIController(IUserService userService, IHttpContextAccessor tp, CounterMiddleWare md)
         {
             _userService = userService;
             _httpContextAcessor = tp;
+            this.md = md;
         }
 
 
@@ -43,6 +46,8 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
             var username = param.login;
             var password = param.password;
+
+
 
             var token = _userService.Authenticate(username, password);
 
@@ -81,6 +86,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [Route("get")]
         public string Get()
         {
+            md.min();
             return "Гет метод что-то возвращает";
             //return "tested!";
 

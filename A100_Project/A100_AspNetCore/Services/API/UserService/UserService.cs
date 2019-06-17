@@ -50,7 +50,8 @@ namespace A100_AspNetCore.Services.API
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-
+            // jwt = null;
+            jwt = null;
 
             // Возвращаем токен
             return encodedJwt;
@@ -62,11 +63,12 @@ namespace A100_AspNetCore.Services.API
         {
 
             // Ищем пользователя по email
-            User user = await _userManager.FindByEmailAsync(username);            
+            User user = await _userManager.FindByEmailAsync(username);
 
             // Если пользователь не найден, верни ошибку о том, что такого юзера нет
             if (user == null)
                 return null;
+
 
             // Проходим авторизацию (Если пользователь найден)
             var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
