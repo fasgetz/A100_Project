@@ -8,13 +8,15 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.Services.API
 {
 
     /// <summary>
-    /// Класс описывает логику работы авторизации API
+    /// Класс описывает логику работы сервиса авторизации API
     /// </summary>
 
     public class UserService : IUserService
@@ -22,13 +24,25 @@ namespace A100_AspNetCore.Services.API
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
+        /// <summary>
+        /// Конструктор, который принимает сервисы пользователей и авторизации
+        /// </summary>
+        /// <param name="userManager">Пользовательский сервис</param>
+        /// <param name="signInManager">Авторизационный сервис</param>
         public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
+            _signInManager = signInManager;            
         }   
 
 
+        
+        /// <summary>
+        /// Метод аутентификации, который возвращает JWT токен
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string Authenticate(string username, string password)
         {
             // Ищем юзера
@@ -51,23 +65,46 @@ namespace A100_AspNetCore.Services.API
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             // jwt = null;
-            jwt = null;
+            JwtSecurityTokenHandler s = new JwtSecurityTokenHandler();
+           
 
             // Возвращаем токен
             return encodedJwt;
         }
 
+        #region Вспомогательные методы
 
-        // Делаем привязку токена, если пользователь найден
+
+
+        /// <summary>
+        /// Приватный, вспомогательный, метод, который ищет юзера по логину и паролю и возвращает привязку (В случае если юзер найден)
+        /// </summary>
+        /// <param name="username">Имя пользователя</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Возвращает привязки пользователя</returns>
         private async Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
 
             // Ищем пользователя по email
             User user = await _userManager.FindByEmailAsync(username);
+            
+
 
             // Если пользователь не найден, верни ошибку о том, что такого юзера нет
             if (user == null)
                 return null;
+
+
+
+
+            //
+            var t = GenerateRefreshToken();
+
+            ClaimsPrincipal def;
+
+
+            //
+
 
 
             // Проходим авторизацию (Если пользователь найден)
@@ -98,5 +135,25 @@ namespace A100_AspNetCore.Services.API
                 ClaimsIdentity.DefaultRoleClaimType);
             return claimsIdentity; // Возвращаем привязки
         }
+
+
+        /// <summary>
+        /// Метод генерирует refresh токен
+        /// </summary>
+        /// <returns>Возвращает сгенерированный refresh токен</returns>
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        #endregion
+
+
+
     }
 }

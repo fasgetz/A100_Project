@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>A100_AspNetCore</name>
+    </assembly>
+    <members>
+        <member name="T:A100_AspNetCore.API.Authentication.AuthenticationControllers.AuthAPIController">
+            <summary>
+            Методы контроллера для аутентификации
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.API.Authentication.Options.AuthOptions">
+            <summary>
+            Параметры аутентификации
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.API.Controllers.CityController">
+            <summary>
+            Контроллер городов
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.API.Controllers.EmployeeController">
+            <summary>
+            Контроллер работников
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Models.API.AuthModel">
+            <summary>
+            Сущность для аутентификации в АПИ
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Models.Repositories.EFGenericRepository`1">
+            <summary>
+            Класс, который реализует паттерн Unit Of Work
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Models.Repositories.IRepository`1">
+            <summary>
+            Паттерн Unit of Work, задача которого заключается в управлении доступом к источнику данных. 
+            Класс, реализующий данный паттерн, не содержит бизнесс-логику, не управляет бизнес-процессами, он только содержит операции над данными
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Services.API.Projects.IProjectsService">
+            <summary>
+            Интерфейс описывает поведение проектов
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Services.API.IUserService">
+            <summary>
+            Интерфейс описывает пользовательский сервис
+            </summary>
+        </member>
+        <member name="T:A100_AspNetCore.Services.API.UserService">
+            <summary>
+            Класс описывает логику работы авторизации API
+            </summary>
+        </member>
+        <member name="M:A100_AspNetCore.Services.API.UserService.Authenticate(System.String,System.String)">
+            <summary>
+            Метод аутентификации, который возвращает JWT токен
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:A100_AspNetCore.Services.API.UserService.GetIdentity(System.String,System.String)">
+            <summary>
+            Приватный, вспомогательный, метод, который ищет юзера по логину и паролю и возвращает привязку (В случае если юзер найден)
+            </summary>
+            <param name="username">Имя пользователя</param>
+            <param name="password">Пароль</param>
+            <returns>Возвращает привязки пользователя</returns>
+        </member>
+        <member name="T:A100_AspNetCore.Services.API._DBService.MyDB">
+            <summary>
+            Для работы с базой данных
+            </summary>
+        </member>
+    </members>
+</doc>
