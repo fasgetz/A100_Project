@@ -45,8 +45,6 @@ namespace A100_AspNetCore.Services.API.RefreshTokenService
                 return false; // false, т.к. невозможно добавить токен в БД
             }
 
-
-            
         }
 
 

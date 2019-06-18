@@ -1,10 +1,12 @@
 ﻿using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.Services.API;
+using A100_AspNetCore.Services.API._DBService;
 using A100_AspNetCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,8 +91,9 @@ namespace A100_AspNetCore.Controllers
                 }
                     
 
-                // Если пользователь найден, то сбрось куки (Секьюрити стамп)
+                // Если пользователь найден, то сбрось куки (Секьюрити стамп) и его токен
                 var removed = await UnLoginUser(user);
+
 
                 // Далее проходим авторизацию
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
@@ -118,7 +121,7 @@ namespace A100_AspNetCore.Controllers
 
 
         /// <summary>
-        /// Метод, который сбрасывает аутентификационные куки
+        /// Метод, который сбрасывает аутентификационные куки, а также токен
         /// </summary>
         /// <param name="name">Имя пользователя</param>
         /// <returns>TRUE, если куки сбросились. False, если произошла ошибка при сбрасывании</returns>
@@ -128,6 +131,15 @@ namespace A100_AspNetCore.Controllers
             {
                 // Обновляем секретный ключ
                 await _userManager.UpdateSecurityStampAsync(user);
+
+                // Ищем токен
+                var token = await DbUsers.db.RefreshTokens.FirstOrDefaultAsync(i => i.IdUser == user.Id && i.IsActive == true);
+                // Если токен найден, то отключи его
+                if (token != null)
+                {
+                    token.IsActive = false;
+                    await DbUsers.db.SaveChangesAsync();
+                }
 
                 return true;
             }
