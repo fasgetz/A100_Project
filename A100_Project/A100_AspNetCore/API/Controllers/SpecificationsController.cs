@@ -1,6 +1,7 @@
 ﻿using A100_AspNetCore.Models.A100_Models.DataBase;
 using A100_AspNetCore.Models.A100_Models.DataBase._Views;
 using A100_AspNetCore.Services.API.SpecificationsService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,7 @@ namespace A100_AspNetCore.API.Controllers
 {
 
     [Route("api/[Controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class SpecificationsController : ControllerBase
     {

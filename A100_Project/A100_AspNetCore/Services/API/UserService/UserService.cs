@@ -87,7 +87,7 @@ namespace A100_AspNetCore.Services.API
         public async Task<RefreshToken> RefreshToken(RefreshToken token)
         {
             // Обращаемся в БД и удостоверяемся, что рефреш токен правильный.
-            var SearchedToken = token;
+            var SearchedToken = tokensService.GetToken(token);
 
             // Если токен не нашли, то верни null
             if (SearchedToken == null)

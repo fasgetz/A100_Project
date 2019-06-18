@@ -32,5 +32,13 @@ namespace A100_AspNetCore.Services.API.RefreshTokenService
         {
             return list.FirstOrDefault(i => i.TokenAcess == token.TokenAcess);
         }
+
+
+        public RefreshToken GetToken(RefreshToken token)
+        {
+            return list.FirstOrDefault(i => i.TokenRefresh == token.TokenRefresh);
+            
+
+        }
     }
 }
