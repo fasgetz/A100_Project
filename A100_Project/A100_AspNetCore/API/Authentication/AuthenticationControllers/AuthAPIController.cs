@@ -41,15 +41,14 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [HttpPost]
         [Route("token")]
         [AllowAnonymous]
-        public async Task Token([FromBody]AuthModel param)
+        public async Task<IActionResult> Token([FromBody]AuthModel param)
         {
 
-            var username = param.login;
-            var password = param.password;
+            if (param == null)
+                return BadRequest("Пользователь не установлен");
 
 
-
-            var token = _userService.Authenticate(username, password);
+            var token = _userService.Authenticate(param.login, param.password);
 
 
             if (token == null)
@@ -65,15 +64,12 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
             {
                 token = token,
                 ExperesDate = DateTime.Now.AddDays(1)
-            };
-
-
-
-
+            };            
 
             // сериализация ответа
-            Response.ContentType = "application/json";
-            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            //Response.ContentType = "application/json";
+            //await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            return Ok(response);
         }
 
 
@@ -93,7 +89,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
             //return new string[] { "value1", "value2" };
         }
 
-        // GET api/values
+        // GET api/getrole
         [HttpGet]
         [Route("GetRole")]
         [Authorize(Roles = "user")]

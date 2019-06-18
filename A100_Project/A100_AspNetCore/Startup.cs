@@ -110,8 +110,7 @@ namespace A100_AspNetCore
                 .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddSingleton<CounterMiddleWare>();
-            // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Сервис контекста            
+            // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)                      
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
             services.AddScoped<ICityService, CityService>(); // Сервис городов
             services.AddScoped<IProjectsService, ProjectsService>(); // Сервис проектов
@@ -119,7 +118,6 @@ namespace A100_AspNetCore
             services.AddScoped<ISchemeService, SchemeService>(); // Сервис схемы (карта)
             services.AddScoped<IVikService, VikService>(); // VIK сервис (повреждения
             services.AddScoped<ISpecificationsService, SpecificationsService>(); // Сервис спецификаций
-            services.AddHttpContextAccessor();
 
             // Сессии
             services.AddDistributedMemoryCache();
@@ -146,18 +144,7 @@ namespace A100_AspNetCore
                 app.UseHsts();
             }
 
-            
-
-
-
-
-
-
-
-
-            // Включаем сессии            
-            app.UseSession();
-
+           
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -173,29 +160,4 @@ namespace A100_AspNetCore
         }
     }
 
-
-
-    public static class SessionExtensions
-    {
-        public static bool? GetBoolean(this ISession session, string key)
-        {
-            var data = session.Get(key);
-            if (data == null)
-            {
-                return null;
-            }
-            return BitConverter.ToBoolean(data, 0);
-        }
-
-        public static void SetBoolean(this ISession session, string key, bool value)
-        {
-            session.Set(key, BitConverter.GetBytes(value));
-        }
-    }
-
-    class Person
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
 }

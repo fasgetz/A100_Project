@@ -64,8 +64,7 @@ namespace A100_AspNetCore.Services.API
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            // jwt = null;
-            JwtSecurityTokenHandler s = new JwtSecurityTokenHandler();
+            
            
 
             // Возвращаем токен
@@ -86,37 +85,29 @@ namespace A100_AspNetCore.Services.API
         {
 
             // Ищем пользователя по email
-            User user = await _userManager.FindByEmailAsync(username);
-            
-
+            User user = await _userManager.FindByEmailAsync(username);           
 
             // Если пользователь не найден, верни ошибку о том, что такого юзера нет
             if (user == null)
                 return null;
 
+            // Иначе, пользователь найден и надо сбросить куки
+            var removed = await UnLoginUser(user);
 
 
-
-            //
-            var t = GenerateRefreshToken();
-
-            ClaimsPrincipal def;
-
-
-            //
-
-
-
-            // Проходим авторизацию (Если пользователь найден)
+            // Далее проходим авторизацию
             var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
             // Если авторизация не прошла успешно, то верни null
             if (!result.Succeeded)
                 return null;
 
+            // Конструкция
+            User u = new User();
+            //u.Email = user.Email;
+            u.Id = user.Id;
             // Далее, если авторизация успешная, то получи список ролей пользователя            
-            var userRoles = await _userManager.GetRolesAsync(user);
-
+            var userRoles = await _userManager.GetRolesAsync(u);
 
             // Необходимо сделать привязки токена к пользователю
             var claims = new List<Claim>
@@ -138,16 +129,22 @@ namespace A100_AspNetCore.Services.API
 
 
         /// <summary>
-        /// Метод генерирует refresh токен
+        /// Метод, который сбрасывает аутентификационные куки
         /// </summary>
-        /// <returns>Возвращает сгенерированный refresh токен</returns>
-        public string GenerateRefreshToken()
+        /// <param name="name">Имя пользователя</param>
+        /// <returns>TRUE, если куки сбросились. False, если произошла ошибка при сбрасывании</returns>
+        private async Task<bool> UnLoginUser(User user)
         {
-            var randomNumber = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
+            try
             {
-                rng.GetBytes(randomNumber);
-                return Convert.ToBase64String(randomNumber);
+                // Обновляем секретный ключ
+                await _userManager.UpdateSecurityStampAsync(user);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
