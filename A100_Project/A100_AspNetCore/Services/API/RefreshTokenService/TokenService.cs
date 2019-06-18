@@ -1,12 +1,12 @@
-﻿using ServicesLibrary.ApiServices.RefreshTokensService.Models;
+﻿using A100_AspNetCore.Services.API.RefreshTokenService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
-namespace ServicesLibrary.ApiServices.RefreshTokensService
+namespace A100_AspNetCore.Services.API.RefreshTokenService
 {
-    class TokensService
+    public class TokensService
     {
         List<RefreshToken> list; // Список Refresh-токенов
 
@@ -20,7 +20,7 @@ namespace ServicesLibrary.ApiServices.RefreshTokensService
         {
             // Если токен не найден, то добавь в список
             if (list.FirstOrDefault(i => i.TokenAcess == token.TokenAcess) == null)
-                list.Add(token);            
+                list.Add(token);
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using A100_AspNetCore.Services.API;
 using A100_AspNetCore.Services.API.CityService;
 using A100_AspNetCore.Services.API.EmployeesService;
 using A100_AspNetCore.Services.API.Projects;
+using A100_AspNetCore.Services.API.RefreshTokenService;
 using A100_AspNetCore.Services.API.SchemeService;
 using A100_AspNetCore.Services.API.SpecificationsService;
 using A100_AspNetCore.Services.API.VikService;
@@ -110,6 +111,7 @@ namespace A100_AspNetCore
                 .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddSingleton<CounterMiddleWare>();
+            services.AddSingleton<TokensService>();
             // Регистрируем сервисы (AddScoped - выделяет память, в случае обращения к сервису, на всю транзакцию)                      
             services.AddScoped<IUserService, UserService>(); // Сервис авторизации
             services.AddScoped<ICityService, CityService>(); // Сервис городов

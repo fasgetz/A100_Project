@@ -1,5 +1,7 @@
 ﻿using A100_AspNetCore.API.Authentication.Options;
 using A100_AspNetCore.Models.Authentication;
+using A100_AspNetCore.Services.API.RefreshTokenService;
+using A100_AspNetCore.Services.API.RefreshTokenService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -23,69 +25,30 @@ namespace A100_AspNetCore.Services.API
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly TokensService tokensService; // Сервис токенов
 
         /// <summary>
         /// Конструктор, который принимает сервисы пользователей и авторизации
         /// </summary>
         /// <param name="userManager">Пользовательский сервис</param>
         /// <param name="signInManager">Авторизационный сервис</param>
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, TokensService tokensService)
         {
             _userManager = userManager;
-            _signInManager = signInManager;            
-        }   
+            _signInManager = signInManager;
+            this.tokensService = tokensService;
+        }
 
-
-        
         /// <summary>
         /// Метод аутентификации, который возвращает JWT токен
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public string Authenticate(string username, string password)
-        {
-            // Ищем юзера
-            var user = GetIdentity(username, password).Result;
-
-            // return null if user not found
-            if (user == null)
-                return null;
-
-            // authentication successful so generate jwt token
-            var now = DateTime.UtcNow;
-            // создаем JWT-токен
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: user.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            
-           
-
-            // Возвращаем токен
-            return encodedJwt;
-        }
-
-        #region Вспомогательные методы
-
-
-
-        /// <summary>
-        /// Приватный, вспомогательный, метод, который ищет юзера по логину и паролю и возвращает привязку (В случае если юзер найден)
-        /// </summary>
-        /// <param name="username">Имя пользователя</param>
+        /// <param name="username">Логин</param>
         /// <param name="password">Пароль</param>
-        /// <returns>Возвращает привязки пользователя</returns>
-        private async Task<ClaimsIdentity> GetIdentity(string username, string password)
+        /// <returns>Возвращает RefreshToken</returns>
+        public async Task<RefreshToken> Authenticate(string username, string password)
         {
-
             // Ищем пользователя по email
-            User user = await _userManager.FindByEmailAsync(username);           
+            User user = await _userManager.FindByEmailAsync(username);
 
             // Если пользователь не найден, верни ошибку о том, что такого юзера нет
             if (user == null)
@@ -94,7 +57,6 @@ namespace A100_AspNetCore.Services.API
             // Иначе, пользователь найден и надо сбросить куки
             var removed = await UnLoginUser(user);
 
-
             // Далее проходим авторизацию
             var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
@@ -102,12 +64,9 @@ namespace A100_AspNetCore.Services.API
             if (!result.Succeeded)
                 return null;
 
-            // Конструкция
-            User u = new User();
-            //u.Email = user.Email;
-            u.Id = user.Id;
-            // Далее, если авторизация успешная, то получи список ролей пользователя            
-            var userRoles = await _userManager.GetRolesAsync(u);
+            // Далее делаем привязки
+            // Ищем роли пользователя
+            var userRoles = await _userManager.GetRolesAsync(user); // Ищет по айди пользователя
 
             // Необходимо сделать привязки токена к пользователю
             var claims = new List<Claim>
@@ -121,11 +80,34 @@ namespace A100_AspNetCore.Services.API
                 claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, item));
             }
 
+            // Делаем привязки
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity; // Возвращаем привязки
+
+            // После этого создаем JWT Acess токен
+            var now = DateTime.UtcNow;
+            // создаем JWT-токен
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: claimsIdentity.Claims, // Привязки
+                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt); // Делаем AcessToken
+
+            // Теперь генерируем refresh - токен
+
+            RefreshToken token = new RefreshToken { TokenAcess = encodedJwt, IdUser = user.Id, TokenRefresh = GenerateRefreshToken() };
+            
+            // Добавляем этот токен в хранилище RefreshToken'ов
+
+
+            return token; // Возвращаем токен
         }
+
+        #region Вспомогательные методы
 
 
         /// <summary>
@@ -145,6 +127,21 @@ namespace A100_AspNetCore.Services.API
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Метод для генерации Refresh-токена
+        /// </summary>
+        /// <returns>Возвращает Refresh-токен</returns>
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
             }
         }
 

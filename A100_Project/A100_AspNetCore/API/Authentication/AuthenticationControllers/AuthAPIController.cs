@@ -37,7 +37,11 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
 
 
-        // GET api/values
+        /// <summary>
+        /// Метод аутентификации API
+        /// </summary>
+        /// <param name="param">Параметры логина и пароля</param>
+        /// <returns>Возвращает JWT Acess токен а так-же Refresh токен для рефреша Acess токен'a</returns>
         [HttpPost]
         [Route("token")]
         [AllowAnonymous]
@@ -48,7 +52,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
                 return BadRequest("Пользователь не установлен");
 
 
-            var token = _userService.Authenticate(param.login, param.password);
+            var token = await _userService.Authenticate(param.login, param.password);
 
 
             if (token == null)
@@ -59,17 +63,8 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
             }
 
 
-            // Если авторизация прошла успешно, то формируем ответ
-            var response = new
-            {
-                token = token,
-                ExperesDate = DateTime.Now.AddDays(1)
-            };            
-
-            // сериализация ответа
-            //Response.ContentType = "application/json";
-            //await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-            return Ok(response);
+            // Если авторизация прошла успешно, то формируем ответ           
+            return Ok(token);
         }
 
 
