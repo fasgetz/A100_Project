@@ -1,15 +1,12 @@
 ﻿using A100_AspNetCore.Models.API;
+using A100_AspNetCore.Models.ASP_Identity;
 using A100_AspNetCore.Services.API;
-using A100_AspNetCore.Services.API.RefreshTokenService.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
@@ -83,22 +80,44 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         [HttpPost]
         [Route("RefreshToken")]
         [AllowAnonymous]
-        public async Task<IActionResult> RefreshToken([FromBody]RefreshToken token)
+        public async Task<IActionResult> RefreshToken([FromBody]RefreshTokens token)
         {
             if (token == null)
-                return BadRequest("Пустые входные данные!");
-
-            var tokens = await _userService.RefreshToken(token);
-
-            // Формируем ответ
-            var response = new
             {
-                AcessToken = tokens.TokenAcess,
-                RefreshToken = tokens.TokenRefresh
-            };
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пустые входные данные");
+            }
 
-            // Отправляем ответ       
-            return Ok(response);
+            RefreshTokens tokens; // Токен
+
+            try
+            {
+                tokens = await _userService.RefreshToken(token);
+
+                if (tokens == null)
+                {
+                    Response.StatusCode = 400;
+                    await Response.WriteAsync("Ничего не нашлось :(");
+                }
+
+                // Формируем ответ
+                var response = new
+                {
+                    AcessToken = tokens.TokenAcess,
+                    RefreshToken = tokens.TokenRefresh
+                };
+
+                // Отправляем ответ       
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Ничего не нашлось :(");
+                return BadRequest();
+            }
+
+            
         }
 
         // Тестовые методы ---------------------------

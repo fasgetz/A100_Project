@@ -1,7 +1,4 @@
-﻿using A100_AspNetCore.Services.API.RefreshTokenService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using A100_AspNetCore.Models.ASP_Identity;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.Services.API
@@ -20,7 +17,7 @@ namespace A100_AspNetCore.Services.API
         /// <param name="username">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>Вовзращает Acess и Refresh токены</returns>
-        Task<RefreshToken> Authenticate(string username, string password);
+        Task<RefreshTokens> Authenticate(string username, string password);
 
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace A100_AspNetCore.Services.API
         /// </summary>
         /// <param name="token">Токен</param>
         /// <returns>Возвращает обновленный Acess токен</returns>
-        Task<RefreshToken> RefreshToken(RefreshToken token);
+        Task<RefreshTokens> RefreshToken(RefreshTokens token);
 
     }
 }

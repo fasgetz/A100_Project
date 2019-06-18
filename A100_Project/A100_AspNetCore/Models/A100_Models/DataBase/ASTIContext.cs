@@ -1,7 +1,5 @@
-﻿using System;
-using A100_AspNetCore.Models.A100_Models.DataBase._Views;
+﻿using A100_AspNetCore.Models.A100_Models.DataBase._Views;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace A100_AspNetCore.Models.A100_Models.DataBase
 {
@@ -25,7 +23,7 @@ namespace A100_AspNetCore.Models.A100_Models.DataBase
         public virtual DbQuery<v_GetMap> v_GetMap { get; set; }
 
 
-        // Таблицы
+        // Таблицы        
         public virtual DbSet<BasicCheckList> BasicCheckList { get; set; }
         public virtual DbSet<BasicDamage> BasicDamage { get; set; }
         public virtual DbSet<BoltedJoint> BoltedJoint { get; set; }

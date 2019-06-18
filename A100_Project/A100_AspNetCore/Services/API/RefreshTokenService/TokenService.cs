@@ -1,43 +1,71 @@
-﻿using A100_AspNetCore.Services.API.RefreshTokenService.Models;
+﻿using A100_AspNetCore.Models.ASP_Identity;
+using A100_AspNetCore.Services.API._DBService;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.Services.API.RefreshTokenService
 {
+
+    /// <summary>
+    /// Сервис-хранилище рефреш токенов
+    /// </summary>
+
     public class TokensService
     {
-        List<RefreshToken> list; // Список Refresh-токенов
-
-        public TokensService()
-        {
-            list = new List<RefreshToken>();
-        }
-
-
-        public void AddToken(RefreshToken token)
-        {
-            // Если токен не найден, то добавь в список
-            if (list.FirstOrDefault(i => i.TokenAcess == token.TokenAcess) == null)
-                list.Add(token);
-        }
 
         /// <summary>
-        /// Метод рефреша токена
+        /// Метод добавляет токен в БД
         /// </summary>
         /// <param name="token"></param>
-        /// <returns></returns>
-        public RefreshToken RefreshToken(RefreshToken token)
+        /// <returns>Возвращает true, если токен добавлен успешно в БД</returns>
+        public async Task<bool> AddToken(RefreshTokens token)
         {
-            return list.FirstOrDefault(i => i.TokenAcess == token.TokenAcess);
+            try
+            {
+
+                // Сперва ищем токен в БД по айди юзера
+                var searchedtoken = await DbUsers.db.RefreshTokens.FirstOrDefaultAsync(i => i.IdUser == token.IdUser && i.IsActive == true);
+
+                // Если токен найден, то необходимо обновить состояние токена на false, а также создать новый
+                if (searchedtoken != null)
+                    searchedtoken.IsActive = false;
+
+
+                // Далее добавляем новый токен, а так-же сохраняем БД
+                await DbUsers.db.RefreshTokens.AddAsync(token);
+                await DbUsers.db.SaveChangesAsync();
+
+
+                return true; // True, т.к. токен добавлен в БД
+            }
+            catch (Exception)
+            {               
+                return false; // false, т.к. невозможно добавить токен в БД
+            }
+
+
+            
         }
 
 
-        public RefreshToken GetToken(RefreshToken token)
+        /// <summary>
+        /// Метод, который возвращает Refresh-токен
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>Возвращает RefreshToken из базы данных</returns>
+        public async Task<RefreshTokens> GetToken(RefreshTokens token)
         {
-            return list.FirstOrDefault(i => i.TokenRefresh == token.TokenRefresh);
-            
+            // Ищем токен
+            var searchedtoken = await DbUsers.db.RefreshTokens.FirstOrDefaultAsync(i => i.TokenRefresh == token.TokenRefresh);
+
+            // Если дата токена вышла (или он неактивен), то не возвращай токен
+            if (searchedtoken.DateLifeEnd < DateTime.Now || searchedtoken.IsActive == false)
+                return null;
+
+            // Иначе, если дата токена не истекла, а также он активен, то верни токен
+            return searchedtoken;
 
         }
     }

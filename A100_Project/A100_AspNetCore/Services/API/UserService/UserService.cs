@@ -1,17 +1,14 @@
 ﻿using A100_AspNetCore.API.Authentication.Options;
+using A100_AspNetCore.Models.ASP_Identity;
 using A100_AspNetCore.Models.Authentication;
 using A100_AspNetCore.Services.API.RefreshTokenService;
-using A100_AspNetCore.Services.API.RefreshTokenService.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.Services.API
@@ -45,7 +42,7 @@ namespace A100_AspNetCore.Services.API
         /// <param name="username">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>Возвращает RefreshToken</returns>
-        public async Task<RefreshToken> Authenticate(string username, string password)
+        public async Task<RefreshTokens> Authenticate(string username, string password)
         {
             // Ищем пользователя по email
             User user = await _userManager.FindByEmailAsync(username);
@@ -70,9 +67,10 @@ namespace A100_AspNetCore.Services.API
 
 
 
-            RefreshToken token = new RefreshToken { TokenAcess = encodedJwt, IdUser = user.Id, TokenRefresh = GenerateRefreshToken() };
+            RefreshTokens token = new RefreshTokens { TokenAcess = encodedJwt, IdUser = user.Id, TokenRefresh = RefreshToken, DateLifeStart = DateTime.Now, DateLifeEnd = DateTime.Now.AddDays(10), IsActive = true };
 
             // Добавляем этот токен в хранилище RefreshToken'ов
+            var added = await tokensService.AddToken(token);            
 
 
             return token; // Возвращаем токен
@@ -84,10 +82,10 @@ namespace A100_AspNetCore.Services.API
         /// </summary>
         /// <param name="token"></param>
         /// <returns>Возвращает обновленный Acess токен</returns>
-        public async Task<RefreshToken> RefreshToken(RefreshToken token)
+        public async Task<RefreshTokens> RefreshToken(RefreshTokens token)
         {
             // Обращаемся в БД и удостоверяемся, что рефреш токен правильный.
-            var SearchedToken = tokensService.GetToken(token);
+            var SearchedToken = await tokensService.GetToken(token);            
 
             // Если токен не нашли, то верни null
             if (SearchedToken == null)
@@ -95,6 +93,9 @@ namespace A100_AspNetCore.Services.API
 
             // Иначе, если токен найден, то сгенерируй новый AcessToken
             SearchedToken.TokenAcess = await GenerateJWT(await _userManager.FindByIdAsync(SearchedToken.IdUser)); // Генерируем новый Acess Токен
+
+            // А также сбросить аутентификационные куки
+            var removed = await UnLoginUser(await _userManager.FindByIdAsync(SearchedToken.IdUser));
 
             return SearchedToken; // Возвращаем обновленный Acess токен
         }

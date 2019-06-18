@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace A100_AspNetCore.Services.API._DBService
 {
     /// <summary>
-    /// Для работы с базой данных
+    /// Для работы с базой данных контекста АСТИ
     /// </summary>
 
     public static partial class MyDB
