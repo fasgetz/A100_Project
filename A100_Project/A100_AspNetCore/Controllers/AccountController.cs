@@ -137,13 +137,14 @@ namespace A100_AspNetCore.Controllers
             }
         }
 
+        /// <summary>
+        /// Метож выхода из аккаунта
+        /// </summary>
+        /// <returns>Редиректит на главную страницу контроллера Home</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            // Ветвь девелопментс
-
-
             // Удаляем аутентификационные куки и делаем редиректинг на главную сраницу 
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
