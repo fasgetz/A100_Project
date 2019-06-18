@@ -141,7 +141,7 @@ namespace A100_AspNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            // удаляем аутентификационные кукисы
+            // Удаляем аутентификационные куки и делаем редирект на главную сраницу
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
