@@ -14,8 +14,21 @@ namespace A100_AspNetCore.Services.API
 
     public interface IUserService
     {
-        // Метод, который делает аутентификацию юзера и возвращает токены (Аксесс и рефреш)
+        /// <summary>
+        /// // Метод, который делает аутентификацию юзера
+        /// </summary>
+        /// <param name="username">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Вовзращает Acess и Refresh токены</returns>
         Task<RefreshToken> Authenticate(string username, string password);
+
+
+        /// <summary>
+        /// Метод, который делает рефреш токена
+        /// </summary>
+        /// <param name="token">Токен</param>
+        /// <returns>Возвращает обновленный Acess токен</returns>
+        Task<RefreshToken> RefreshToken(RefreshToken token);
 
     }
 }

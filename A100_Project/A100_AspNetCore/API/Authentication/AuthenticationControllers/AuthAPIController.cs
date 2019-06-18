@@ -1,5 +1,6 @@
 ﻿using A100_AspNetCore.Models.API;
 using A100_AspNetCore.Services.API;
+using A100_AspNetCore.Services.API.RefreshTokenService.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -43,7 +44,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
         /// <param name="param">Параметры логина и пароля</param>
         /// <returns>Возвращает JWT Acess токен а так-же Refresh токен для рефреша Acess токен'a</returns>
         [HttpPost]
-        [Route("token")]
+        [Route("authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> Token([FromBody]AuthModel param)
         {
@@ -62,11 +63,43 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
             }
 
+            // Формируем ответ
+            var response = new
+            {
+                AcessToken = token.TokenAcess,
+                RefreshToken = token.TokenRefresh
+            };
 
-            // Если авторизация прошла успешно, то формируем ответ           
-            return Ok(token);
+            // Отправляем ответ       
+            return Ok(response);
         }
 
+
+        /// <summary>
+        /// Метод, который делает рефреш токена
+        /// </summary>
+        /// <param name="token">Токен (Аксесс и рефреш)</param>
+        /// <returns>Метод возвращает обновленный Acess - токен</returns>
+        [HttpPost]
+        [Route("RefreshToken")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody]RefreshToken token)
+        {
+            if (token == null)
+                return BadRequest("Пустые входные данные!");
+
+            var tokens = await _userService.RefreshToken(token);
+
+            // Формируем ответ
+            var response = new
+            {
+                AcessToken = tokens.TokenAcess,
+                RefreshToken = tokens.TokenRefresh
+            };
+
+            // Отправляем ответ       
+            return Ok(response);
+        }
 
         // Тестовые методы ---------------------------
 

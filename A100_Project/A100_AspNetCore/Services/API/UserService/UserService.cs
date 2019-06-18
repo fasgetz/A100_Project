@@ -40,7 +40,7 @@ namespace A100_AspNetCore.Services.API
         }
 
         /// <summary>
-        /// Метод аутентификации, который возвращает JWT токен
+        /// Метод аутентификации, который возвращает JWT токен (При каждой аутентификации генерируется новый JWT токен)
         /// </summary>
         /// <param name="username">Логин</param>
         /// <param name="password">Пароль</param>
@@ -54,7 +54,7 @@ namespace A100_AspNetCore.Services.API
             if (user == null)
                 return null;
 
-            // Иначе, пользователь найден и надо сбросить куки
+            // Иначе, пользователь найден, тогда надо сбросить куки
             var removed = await UnLoginUser(user);
 
             // Далее проходим авторизацию
@@ -64,6 +64,50 @@ namespace A100_AspNetCore.Services.API
             if (!result.Succeeded)
                 return null;
 
+            // Теперь генерируем данные для RefreshToken'a
+            var encodedJwt = await GenerateJWT(user); // JWT AcessToken
+            var RefreshToken = GenerateRefreshToken(); // RefreshToken
+
+
+
+            RefreshToken token = new RefreshToken { TokenAcess = encodedJwt, IdUser = user.Id, TokenRefresh = GenerateRefreshToken() };
+
+            // Добавляем этот токен в хранилище RefreshToken'ов
+
+
+            return token; // Возвращаем токен
+        }
+
+
+        /// <summary>
+        /// Метод, который делает рефреш токена
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>Возвращает обновленный Acess токен</returns>
+        public async Task<RefreshToken> RefreshToken(RefreshToken token)
+        {
+            // Обращаемся в БД и удостоверяемся, что рефреш токен правильный.
+            var SearchedToken = token;
+
+            // Если токен не нашли, то верни null
+            if (SearchedToken == null)
+                return null;
+
+            // Иначе, если токен найден, то сгенерируй новый AcessToken
+            SearchedToken.TokenAcess = await GenerateJWT(await _userManager.FindByIdAsync(SearchedToken.IdUser)); // Генерируем новый Acess Токен
+
+            return SearchedToken; // Возвращаем обновленный Acess токен
+        }
+
+        #region Вспомогательные методы
+
+        /// <summary>
+        /// Метод генерации JWT токена, который действует, как Acess-токен
+        /// </summary>
+        /// <param name="user">Пользователь</param>
+        /// <returns></returns>
+        private async Task<string> GenerateJWT(User user)
+        {
             // Далее делаем привязки
             // Ищем роли пользователя
             var userRoles = await _userManager.GetRolesAsync(user); // Ищет по айди пользователя
@@ -71,7 +115,7 @@ namespace A100_AspNetCore.Services.API
             // Необходимо сделать привязки токена к пользователю
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, username), // Логин к токену
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email), // Логин к токену
                 };
 
             // Добавляем список ролей
@@ -95,19 +139,8 @@ namespace A100_AspNetCore.Services.API
                     claims: claimsIdentity.Claims, // Привязки
                     expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt); // Делаем AcessToken
-
-            // Теперь генерируем refresh - токен
-
-            RefreshToken token = new RefreshToken { TokenAcess = encodedJwt, IdUser = user.Id, TokenRefresh = GenerateRefreshToken() };
-            
-            // Добавляем этот токен в хранилище RefreshToken'ов
-
-
-            return token; // Возвращаем токен
+            return new JwtSecurityTokenHandler().WriteToken(jwt); // Возвращаем JWT - acess токен
         }
-
-        #region Вспомогательные методы
 
 
         /// <summary>
