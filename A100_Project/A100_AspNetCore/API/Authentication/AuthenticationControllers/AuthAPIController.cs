@@ -1,14 +1,12 @@
 ﻿using A100_AspNetCore.Models.API;
+using A100_AspNetCore.Models.ASP_Identity;
 using A100_AspNetCore.Services.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
@@ -37,9 +35,13 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
 
 
-        // GET api/values
+        /// <summary>
+        /// Метод аутентификации API
+        /// </summary>
+        /// <param name="param">Параметры логина и пароля</param>
+        /// <returns>Возвращает JWT Acess токен а так-же Refresh токен для рефреша Acess токен'a</returns>
         [HttpPost]
-        [Route("token")]
+        [Route("authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> Token([FromBody]AuthModel param)
         {
@@ -48,7 +50,7 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
                 return BadRequest("Пользователь не установлен");
 
 
-            var token = _userService.Authenticate(param.login, param.password);
+            var token = await _userService.Authenticate(param.login, param.password);
 
 
             if (token == null)
@@ -58,20 +60,65 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
 
             }
 
-
-            // Если авторизация прошла успешно, то формируем ответ
+            // Формируем ответ
             var response = new
             {
-                token = token,
-                ExperesDate = DateTime.Now.AddDays(1)
-            };            
+                AcessToken = token.TokenAcess,
+                RefreshToken = token.TokenRefresh
+            };
 
-            // сериализация ответа
-            //Response.ContentType = "application/json";
-            //await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            // Отправляем ответ       
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Метод, который делает рефреш токена
+        /// </summary>
+        /// <param name="token">Токен (Аксесс и рефреш)</param>
+        /// <returns>Метод возвращает обновленный Acess - токен</returns>
+        [HttpPost]
+        [Route("RefreshToken")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody]RefreshTokens token)
+        {
+            if (token == null)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пустые входные данные");
+            }
+
+            RefreshTokens tokens; // Токен
+
+            try
+            {
+                tokens = await _userService.RefreshToken(token);
+
+                if (tokens == null)
+                {
+                    Response.StatusCode = 400;
+                    await Response.WriteAsync("Ничего не нашлось :(");
+                }
+
+                // Формируем ответ
+                var response = new
+                {
+                    AcessToken = tokens.TokenAcess,
+                    RefreshToken = tokens.TokenRefresh
+                };
+
+                // Отправляем ответ       
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Ничего не нашлось :(");
+                return BadRequest();
+            }
+
+            
+        }
 
         // Тестовые методы ---------------------------
 
