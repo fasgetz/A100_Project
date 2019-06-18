@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using A100_AspNetCore.Models.A100_Models.DataBase;
 using A100_AspNetCore.Models.A100_Models.DataBase._Views;
 using A100_AspNetCore.Services.API.VikService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace A100_AspNetCore.API.Controllers
 {
 
     [Route("api/[Controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class VIKController : ControllerBase
     {
