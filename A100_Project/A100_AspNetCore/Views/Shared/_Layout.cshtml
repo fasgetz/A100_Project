@@ -13,9 +13,14 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <environment names="Development">
+        <link href="~/css/main/footer.css" rel="stylesheet" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+
+
 </head>
 <body>
     <header>
@@ -46,10 +51,54 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted myfooter">
-        <div class="container">
+    <footer class="border-top footer text-muted">
+        
+        <div class="container-fluid myfooter">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="footer-blok">
+                            <h5>ТЕХНОВИК</h5>
+                            <p>
+                                Ведущий независимый эксперт с 2010 года в оказании профессиональных
+                                услуг по техническому освидетельствованию стеллажей. Испытательная лаборатория имеет
+                                аттестат аккредитации в соответствии с ГОСТ Р 55525-2017.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-blok">
+                            <h5><a href="#" style="color: #cecaca">Инструкция пользователя А100</a></h5>
+                            <h5>Полезная информация</h5>
+                            <ul class="my-list">
+                                <li>
+                                    <a href="#">hello world</a>
+                                </li>
+                                <li>
+                                    <a href="#">hello world</a>
+                                </li>
+                                <li>
+                                    <a href="#">hello world</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-blok">
+                            <h5>ТЕХНОВИК</h5>
+                            <p>
+                                Ведущий независимый эксперт с 2010 года в оказании профессиональных
+                                услуг по техническому освидетельствованию стеллажей. Испытательная лаборатория имеет
+                                аттестат аккредитации в соответствии с ГОСТ Р 55525-2017.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>2019 © Все права защищены. Политика конфиденциальности</p>
             &copy; 2019 - A100_AspNetCore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
+
     </footer>
 
     <environment include="Development">

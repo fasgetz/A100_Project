@@ -1,0 +1,46 @@
+﻿.myfooter {    
+    background-color: #6f6f6f;
+
+}
+
+.myfooter p, h5 {
+    color: white;
+}
+
+.myfooter h5 a:hover {
+    color: white;
+    font-size: 22px;
+}
+
+.myfooter a {
+    color: white;
+}
+
+
+.myfooter h5 {
+    margin-top: 30px;
+}
+
+.footer-blok {
+    width: auto;
+    white-space: normal;
+    line-height: normal
+}
+
+.myfooter li {
+    margin-top: 10px;
+    list-style-type: none;
+    border-bottom: 15px dotted #cecaca;
+    margin-bottom: 10px;
+    
+}
+
+.myfooter .my-list a {
+    margin-bottom: 15px;
+}
+
+.my-list a {   
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
+
