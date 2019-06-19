@@ -21,13 +21,11 @@ namespace A100_AspNetCore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly CounterMiddleWare md;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, CounterMiddleWare md)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            this.md = md;
         }
         [HttpGet]
         public IActionResult Register()
@@ -64,12 +62,16 @@ namespace A100_AspNetCore.Controllers
         [AllowAnonymous]
         public string set()
         {
-            return md.GetValue.ToString();
+            return "tpli";
         }
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
+            // Если пользователь авторизован, то перекинь на главную страницу контролелра Home
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
@@ -101,15 +103,7 @@ namespace A100_AspNetCore.Controllers
                 // Если авторизация успешна
                 if (result.Succeeded)
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
 
                 // Иначе, авторизация не успешна, то выведи это

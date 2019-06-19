@@ -9,32 +9,26 @@ using A100_AspNetCore.Models.A100_Models.DataBase;
 using Microsoft.EntityFrameworkCore;
 using A100_AspNetCore.Services.API.CityService;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace A100_AspNetCore.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
         ICityService service;
-        private readonly IHttpContextAccessor _httpContextAcessor;
 
-        public HomeController(ICityService service, IHttpContextAccessor tp)
+        public HomeController(ICityService service)
         {
             this.service = service;
-            _httpContextAcessor = tp;
         }
 
-        const string SessionKeyName = "_Name";
-        const string SessionKeyYearsMember = "_YearsMember";
-        const string SessionKeyDate = "_Date";
 
         [HttpGet]
         public string Get()
         {
-            var name = HttpContext.Session.GetString(SessionKeyName);
-            var yearsMember = _httpContextAcessor.HttpContext.Session.GetInt32(SessionKeyYearsMember);
-
-            return $"Name: \"{name}\",  Membership years: \"{yearsMember}\"";
+            return $"hello get";
         }
 
         public async Task<IActionResult> Index()

@@ -139,7 +139,6 @@ namespace A100_AspNetCore
                 app.UseHsts();
             }
 
-           
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -150,7 +149,7 @@ namespace A100_AspNetCore
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Account}/{action=Login}");
             });
         }
     }

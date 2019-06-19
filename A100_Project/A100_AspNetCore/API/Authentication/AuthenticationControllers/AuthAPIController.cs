@@ -116,8 +116,6 @@ namespace A100_AspNetCore.API.Authentication.AuthenticationControllers
                 await Response.WriteAsync("Ничего не нашлось :(");
                 return BadRequest();
             }
-
-            
         }
 
         // Тестовые методы ---------------------------
